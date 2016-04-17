@@ -13,8 +13,12 @@
     tools:showIn="@layout/activity_main"
     tools:context="eda397_group7.chalmers.se.eda397_2016_group7.MainActivity">
 
-    <TextView
-        android:text="Hello World!"
+    <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="@string/login_with_trello"
+        android:id="@+id/trello_login"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>
