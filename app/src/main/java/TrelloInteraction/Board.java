@@ -73,4 +73,9 @@ public class Board {
         }
         return cardName;
     }
+
+    public String getId() {
+        return id;
+    }
+
 }

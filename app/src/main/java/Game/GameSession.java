@@ -1,15 +1,34 @@
 package Game;
 
+import android.util.Log;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.api.client.googleapis.auth.clientlogin.ClientLogin;
+import com.google.api.client.json.Json;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.List;
 
+import TrelloInteraction.Argument;
 import TrelloInteraction.Board;
 import TrelloInteraction.Card;
+import TrelloInteraction.TrelloManagerS;
+import TrelloInteraction.VolleyManager;
 
 public class GameSession {
 
     private Board gameBoard;
-    private int nrOfPlayers;
     private String currentCardID;
+    protected int memberId;
+    protected RequestQueue queue = VolleyManager.getInstance(null).getRequestQueue();
+    protected String logTag = "Game Session Log";
 
     /*
         Method used for starting a session
@@ -23,34 +42,20 @@ public class GameSession {
         *           memberId (of host..)
      */
 
-    public GameSession(String id, int nrOfPlayers) {
-        gameBoard = new Board(id);
-        this.nrOfPlayers = nrOfPlayers;
-        //Start_Session
-    }
-
-    public void setCurrentCard(Card card) {
-        // DOM REQ
-        // Delete current card from Board
+    public GameSession(String boardId) {
+        gameBoard = new Board(boardId);
     }
 
     public void getCurrentCard() {
-        //Dom req
+        //GET_CURRENT_CARD -> currentCardID
     }
 
     public Board getGameBoard() {
         return gameBoard;
     }
 
-    public void getCurrentRatings() {
-        //Dom req
-    }
 
-    public void getAllCardRatings() {
-        //Dom req
-    }
+    public void onResponse(JSONObject response) {
 
-    public void setRating() {
-        //Dom Req
     }
 }

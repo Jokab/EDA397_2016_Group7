@@ -25,6 +25,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import Game.HostSession;
 import TrelloInteraction.Argument;
 import TrelloInteraction.Board;
 import TrelloInteraction.TrelloManagerS;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private final static String returnUrl = "ase://oauthresponse";
     private final static String trelloAuthorizeUrl = "https://trello.com/1/authorize?expiration="+expiration+"&name="+appName+"&key="+appKey+"&callback_method="+callbackMethod+"&return_url="+returnUrl;
     private RequestQueue queue;
+    private HostSession host;
 
     private JSONObject requestObj;
     final String boardID = "l56NCOG9";
@@ -80,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     try {
+                        host = new HostSession(primaryBoard.getId(), 1);
                         primaryBoard.updateCards();
                         TextView t = (TextView) findViewById(R.id.trello_text);
                         t.setText(primaryBoard.getCard());
