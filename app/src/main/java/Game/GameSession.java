@@ -11,6 +11,18 @@ public class GameSession {
     private int nrOfPlayers;
     private String currentCardID;
 
+    /*
+        Method used for starting a session
+        /startNewSession
+        * Keys:     amountOfMembers
+        *           trelloBoardId
+     
+        Method for selecting a new card. Old card will be deleted if one exists.
+        /selectNewCard
+        * Keys:     cardId
+        *           memberId (of host..)
+     */
+
     public GameSession(String id, int nrOfPlayers) {
         gameBoard = new Board(id);
         this.nrOfPlayers = nrOfPlayers;
@@ -42,37 +54,3 @@ public class GameSession {
         //Dom Req
     }
 }
-
-/*
-PHP API
-
-http://agile.project.domein.co.at/
-
-Method used for starting a session
-**startNewSession
-
-Method for registering a user in an ongoing session.
-**registerMember
-
-Method for selecting a new card. Old card will be deleted if one exists.
-**selectNewCard
-
-Method for closing a card so that no more votings for it are accepted.
-**closeCard
-
-Method for resetting a card so that the old votings of a card are deleted in case a card is iterated multiple times.
-**resetCard
-
-Method for receiving the id of the currently selected card.
-**getCurrentCard
-
-Method for receiving votings for the current card given that every member has voted.
-**getVotingsForCurrentCard
-
-Method for receiving votings for the current card given that every member has voted.
-**getAllVotings
-
-Method for resetting the whole game.
-**resetGame
-
- */
