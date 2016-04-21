@@ -40,8 +40,7 @@ public class TrelloUrl {
 
     public String asString(String realID) {
         StringBuilder builder = new StringBuilder(API_URL);
-        //builder.append(baseURL.replaceFirst("(.*?(\\{).*?(id)(\\}))",realID));
-        builder.append(baseURL.replace("{boardId}", realID));
+        builder.append(baseURL.replaceFirst("((\\{).*?(Id)(\\}))",realID));
         builder.append(API_KEY_TOKEN_PARAM);
         for(Argument arg : args){
             builder.append("&");
@@ -49,7 +48,6 @@ public class TrelloUrl {
             builder.append("=");
             builder.append(arg.getArgValue());
         }
-        Log.println(Log.INFO, "Trello request", builder.toString());
         return builder.toString();
     }
 

@@ -26,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import TrelloInteraction.Argument;
+import TrelloInteraction.Board;
 import TrelloInteraction.TrelloManagerS;
 import TrelloInteraction.VolleyManager;
 
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private RequestQueue queue;
 
     private JSONObject requestObj;
+    private Board board;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         Button trelloLoginButton = (Button) findViewById(R.id.trello_login);
         queue = VolleyManager.getInstance(this.getApplicationContext()).getRequestQueue();
         if (trelloLoginButton != null) {
-            trelloLoginButton.setOnClickListener(new View.OnClickListener() {
+            trelloLoginButton.setOnClickListener(   new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
