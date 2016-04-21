@@ -43,13 +43,11 @@ public class Board {
 
     public String getCard(){
         String cardName = "";
-
         try{
-            cardName = cards.get(0).name.toString();
+            cardName = cards.get(0).getName();
         }catch (Exception e) {
             Log.i("Card array empty", null);
         }
-
         return cardName;
     }
 }
