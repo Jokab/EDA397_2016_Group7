@@ -35,12 +35,11 @@ public class HostSession extends GameSession {
     public void startSession(int nrOfPlayers) {
         Map<String, String> jsonParams = new HashMap<String, String>();
         jsonParams.put("amountOfMembers","5");
-        jsonParams.put("TrelloBoardId", "5");
-        JSONObject jsonParameters = new JSONObject(jsonParams);
+        jsonParams.put("trelloBoardId", "5");
 
         Log.i(logTag, (new JSONObject((jsonParams)).toString() ));
-        JsonObjectRequest startRequest = new JsonObjectRequest(Request.Method.POST,
-                createURL(START_SESSION).asString(), jsonParameters ,
+        CustomJsonObjRequest startRequest = new CustomJsonObjRequest(Request.Method.POST,
+                createURL(START_SESSION).asString(), jsonParams ,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
