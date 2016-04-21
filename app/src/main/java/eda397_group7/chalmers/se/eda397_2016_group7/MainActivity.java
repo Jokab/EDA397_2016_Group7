@@ -41,9 +41,8 @@ public class MainActivity extends AppCompatActivity {
     private RequestQueue queue;
 
     private JSONObject requestObj;
-    private Board board;
     final String boardID = "l56NCOG9";
-    Board primaryBoard = new Board(boardID);
+    private Board primaryBoard = new Board(boardID);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +53,11 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Button trelloLoginButton = (Button) findViewById(R.id.trello_login);
+
+        //Need to set this up ONCE.
         queue = VolleyManager.getInstance(this.getApplicationContext()).getRequestQueue();
+        //Need to set this up once, unless
+        TrelloManagerS.INSTANCE.init(appKey, "babblish");
         if (trelloLoginButton != null) {
             trelloLoginButton.setOnClickListener(   new View.OnClickListener() {
                 @Override
@@ -71,45 +74,15 @@ public class MainActivity extends AppCompatActivity {
         }
         boolean justAuthenticated = checkOAuthReturn(getIntent());
 
-        TrelloManagerS.INSTANCE.init(appKey, "babblish");
-
-        final JsonArrayRequest jsObjRequest = new JsonArrayRequest(
-                TrelloManagerS.INSTANCE.getBoard(boardID, Argument.arg("fields", "name,desc")),
-                new Response.Listener<JSONArray>() {
-
-            @Override
-
-            public void onResponse(JSONArray response) {
-                TextView t = (TextView) findViewById(R.id.trello_text);
-                Log.i("Real Response", response.toString());
-                primaryBoard.JArrayToCards(response);
-
-                t.setText("Response => " + primaryBoard.getCard());
-
-
-            }
-
-        }, new Response.ErrorListener() {
-
-            @Override
-
-            public void onErrorResponse(VolleyError error) {
-                TextView t = (TextView) findViewById(R.id.trello_text);
-                Log.i("Error Response", error.getCause().toString());
-                t.setText("request dun goofed");
-            }
-
-        });
-
-
         Button trelloTestButton = (Button) findViewById(R.id.trello_api);
         if (trelloTestButton != null) {
             trelloTestButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     try {
-                        queue.add(jsObjRequest);
+                        primaryBoard.updateCards();
+                        TextView t = (TextView) findViewById(R.id.trello_text);
+                        t.setText(primaryBoard.getCard());
                     } catch (Exception ex) {
                     }
                 }
