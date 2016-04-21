@@ -28,8 +28,7 @@
         android:layout_height="wrap_content"
         android:text="Trello Api"
         android:id="@+id/trello_api"
-        android:layout_marginTop="41dp"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/trello_login"
         android:layout_centerHorizontal="true" />
 
     <TextView

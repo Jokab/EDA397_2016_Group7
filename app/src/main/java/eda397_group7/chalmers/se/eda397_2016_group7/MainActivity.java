@@ -42,9 +42,13 @@ public class MainActivity extends AppCompatActivity {
 
     private JSONObject requestObj;
     private Board board;
+    final String boardID = "l56NCOG9";
+    Board primaryBoard = new Board(boardID);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -70,15 +74,18 @@ public class MainActivity extends AppCompatActivity {
         TrelloManagerS.INSTANCE.init(appKey, "babblish");
 
         final JsonArrayRequest jsObjRequest = new JsonArrayRequest(
-                TrelloManagerS.INSTANCE.getBoard("l56NCOG9", Argument.arg("fields", "name,desc,idList")),
+                TrelloManagerS.INSTANCE.getBoard(boardID, Argument.arg("fields", "name,desc")),
                 new Response.Listener<JSONArray>() {
 
             @Override
 
             public void onResponse(JSONArray response) {
                 TextView t = (TextView) findViewById(R.id.trello_text);
-                t.setText("Response => " + response.toString());
                 Log.i("Real Response", response.toString());
+                primaryBoard.JArrayToCards(response);
+
+                t.setText("Response => " + primaryBoard.getCard());
+
 
             }
 
