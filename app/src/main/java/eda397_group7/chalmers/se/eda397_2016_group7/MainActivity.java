@@ -1,6 +1,8 @@
 package eda397_group7.chalmers.se.eda397_2016_group7;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -28,19 +30,15 @@ import org.json.JSONObject;
 import Game.HostSession;
 import TrelloInteraction.Argument;
 import TrelloInteraction.Board;
+import TrelloInteraction.TrelloAuthenticationConstants;
 import TrelloInteraction.TrelloManagerS;
 import TrelloInteraction.VolleyManager;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final static String appKey = "ff0bd4ea77916c91b322590c767a684d";
-    private final static String appName = "PlanningPokerWithTrello";
-    private final static String expiration = "never";
-    private final static String callbackMethod = "fragment";
-    private final static String returnUrl = "ase://oauthresponse";
-    private final static String trelloAuthorizeUrl = "https://trello.com/1/authorize?expiration="+expiration+"&name="+appName+"&key="+appKey+"&callback_method="+callbackMethod+"&return_url="+returnUrl;
     private RequestQueue queue;
     private HostSession host;
+    private SharedPreferences sharedPreferences;
 
     private JSONObject requestObj;
     final String boardID = "l56NCOG9";
@@ -48,25 +46,28 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Button trelloLoginButton = (Button) findViewById(R.id.trello_login);
+        sharedPreferences = this.getSharedPreferences(
+                "authorizeprefs", Context.MODE_PRIVATE);
+        String authtoken = sharedPreferences.getString("authtoken", "empty");
+        if(!authtoken.equals("empty")){
+            Toast.makeText(this, "already authorized", Toast.LENGTH_LONG).show();
+        }
 
         //Need to set this up ONCE.
         queue = VolleyManager.getInstance(this.getApplicationContext()).getRequestQueue();
         //Need to set this up once, unless
-        TrelloManagerS.INSTANCE.init(appKey, "babblish");
+        TrelloManagerS.INSTANCE.init(TrelloAuthenticationConstants.appKey, "babblish");
         if (trelloLoginButton != null) {
             trelloLoginButton.setOnClickListener(   new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     try {
-                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(trelloAuthorizeUrl)));
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(TrelloAuthenticationConstants.trelloAuthorizeUrl)));
                     } catch (Exception ex) {
                         Toast.makeText(MainActivity.this, "Invalid", Toast.LENGTH_LONG).show();
                         Log.e("Dashboard no auth", "Cannot initiate communication to get the request token\nException: " + ex.getClass().getName() + "\nMessage: " + ex.getMessage());
@@ -129,10 +130,13 @@ public class MainActivity extends AppCompatActivity {
         if (uri != null && uri.toString().startsWith("ase://oauthresponse")) {
             String[] uriParts = uri.toString().split("#token=");
             if(uriParts.length > 0){
+                sharedPreferences = this.getSharedPreferences(
+                        "authorizeprefs", Context.MODE_PRIVATE);
                 code = uriParts[1];
+                sharedPreferences.edit().putString("authtoken", code).apply();
                 returnFromAuth = true;
             }
-            Toast.makeText(this, code, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Login successful.", Toast.LENGTH_LONG).show();
         }
         return returnFromAuth;
     }
