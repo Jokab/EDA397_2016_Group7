@@ -18,6 +18,8 @@ import eda397_group7.chalmers.se.eda397_2016_group7.R;
 
 public class DisplayResultsActivity extends AppCompatActivity {
 
+    public static final String[] TEST_RESULTS_LIST_DATA = new String[]{"5", "3", "7", "1", "3", "6", "5"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,11 +27,10 @@ public class DisplayResultsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        String[] myStringArray = {"5", "3", "7","1","3","6","5"};
         ArrayAdapter<String> myAdapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_activated_1,
-                myStringArray);
+                TEST_RESULTS_LIST_DATA);
         GridView gridview = (GridView) findViewById(R.id.ratingListGrid);
         gridview.setAdapter(myAdapter);
 

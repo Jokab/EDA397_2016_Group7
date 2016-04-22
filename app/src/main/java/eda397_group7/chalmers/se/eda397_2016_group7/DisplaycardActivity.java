@@ -29,7 +29,7 @@ public class DisplaycardActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final int[] RateResult = {0};
+        final int[] rateResult = {0};
         final TextView ratingResult =
                 (TextView) findViewById(R.id.rateResult);
         ratingResult.addTextChangedListener(new TextWatcher() {
@@ -43,14 +43,14 @@ public class DisplaycardActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                RateResult[0] = Integer.parseInt(ratingResult.getText().toString());
+                rateResult[0] = Integer.parseInt(ratingResult.getText().toString());
             }
         });
 
         Button submitButton = (Button) findViewById(R.id.submitRateButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (RateResult[0] == 0) {
+                if (rateResult[0] == 0) {
                     Toast.makeText(getApplicationContext(), "Please rate the card", Toast.LENGTH_SHORT).show();
 
                 } else {

@@ -18,15 +18,15 @@ public class ChooseRoleActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Button DevButton = (Button) findViewById(R.id.ModeratorButton);
-        DevButton.setOnClickListener(new View.OnClickListener() {
+        Button devButton = (Button) findViewById(R.id.ModeratorButton);
+        devButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(ChooseRoleActivity.this, SelectProjectActivity.class));
             }
         });
 
-        Button ModButton = (Button) findViewById(R.id.DeveloperButton);
-        ModButton.setOnClickListener(new View.OnClickListener() {
+        Button modButton = (Button) findViewById(R.id.DeveloperButton);
+        modButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(ChooseRoleActivity.this, DisplaycardActivity.class));
             }

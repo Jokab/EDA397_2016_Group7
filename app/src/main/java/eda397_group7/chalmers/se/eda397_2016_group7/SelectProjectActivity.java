@@ -2,14 +2,11 @@ package eda397_group7.chalmers.se.eda397_2016_group7;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -17,11 +14,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import eda397_group7.chalmers.se.eda397_2016_group7.R;
-
 public class SelectProjectActivity extends AppCompatActivity {
 
     private static final String DEBUG_PROJECT_NAME = "Testboard";
+    private static final String[] TEST_PROJECT_LIST_DATA = new String[]{"Aasdasdasd asdas asdsa", "B", "C"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +26,11 @@ public class SelectProjectActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-        String[] myStringArray = {"Aasdasdasd asdas asdsa", "B", "C"};
         final String[] selectedProject = {""};
         ArrayAdapter<String> myAdapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_activated_1,
-                myStringArray);
+                TEST_PROJECT_LIST_DATA);
         final ListView myList =
                 (ListView) findViewById(R.id.listViewOfProjects);
 
