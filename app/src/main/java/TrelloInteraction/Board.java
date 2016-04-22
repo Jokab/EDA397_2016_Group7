@@ -1,5 +1,7 @@
 package TrelloInteraction;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -21,7 +23,7 @@ import eda397_group7.chalmers.se.eda397_2016_group7.R;
 /**
  * Created by lundenant on 2016-04-19.
  */
-public class Board {
+public class Board implements Parcelable{
 
     private String id;
     private String name;
@@ -30,6 +32,23 @@ public class Board {
     public Board(String id) {
         this.id = id;
     }
+
+    public Board(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+    }
+
+    public static final Creator<Board> CREATOR = new Creator<Board>() {
+        @Override
+        public Board createFromParcel(Parcel in) {
+            return new Board(in);
+        }
+
+        @Override
+        public Board[] newArray(int size) {
+            return new Board[size];
+        }
+    };
 
     public void updateCards() {
         JsonArrayRequest cardsRequest = new JsonArrayRequest(
@@ -78,4 +97,15 @@ public class Board {
         return id;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(id);
+        parcel.writeString(name);
+        parcel.writeList(cards);
+    }
 }

@@ -14,7 +14,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.content.Intent;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -92,6 +92,20 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+
+        Button phpButton = (Button) findViewById(R.id.phpButton);
+        if (phpButton != null) {
+            phpButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    Intent i = new Intent(MainActivity.this, PHPActivity.class);
+                    i.putExtra("board", boardID);
+                    startActivity(i);
+
+                }
+            });
+        }
+
     }
 
 
