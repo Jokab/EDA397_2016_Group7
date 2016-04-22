@@ -26,16 +26,27 @@
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
-        android:id="@+id/editText3"
+        android:id="@+id/rateResult"
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true" />
 
     <ExpandableListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/expandableListView"
+        android:id="@+id/expandableListViewDisplayedCard"
         android:layout_below="@+id/textView5"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/editText3"
-        android:layout_alignEnd="@+id/textView5" />
+        android:layout_above="@+id/rateResult"
+        android:layout_alignEnd="@+id/textView5"
+        android:choiceMode="singleChoice" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:id="@+id/submitRateButton"
+        android:layout_below="@+id/expandableListViewDisplayedCard"
+        android:layout_alignBottom="@+id/rateResult"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/rateResult" />
 </RelativeLayout>

@@ -42,7 +42,6 @@ public class SelectProjectActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selectedProject[0] = (String) myList.getItemAtPosition(position);
-                Toast.makeText(getApplicationContext(), (String) myList.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
             }
         });
         myList.setAdapter(myAdapter);

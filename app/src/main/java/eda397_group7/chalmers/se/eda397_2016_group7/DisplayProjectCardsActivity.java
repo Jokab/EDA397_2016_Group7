@@ -1,5 +1,6 @@
 package eda397_group7.chalmers.se.eda397_2016_group7;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -35,7 +36,7 @@ public class DisplayProjectCardsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selectedCard[0] = (String) myList.getItemAtPosition(position);
-                Toast.makeText(getApplicationContext(), (String) myList.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(DisplayProjectCardsActivity.this, DisplayResultsActivity.class));
             }
         });
         myList.setAdapter(myAdapter);
