@@ -34,8 +34,8 @@ public class HostSession extends GameSession {
 
     public void startSession(int nrOfPlayers) {
         Map<String, String> jsonParams = new HashMap<String, String>();
-        jsonParams.put("amountOfMembers","5");
-        jsonParams.put("trelloBoardId", "5");
+        jsonParams.put(ARG_NR_OF_PLAYERS,""+nrOfPlayers);
+        jsonParams.put(ARG_BOARD_ID, gameBoard.getId());
 
         Log.i(logTag, (new JSONObject((jsonParams)).toString() ));
         CustomJsonObjRequest startRequest = new CustomJsonObjRequest(Request.Method.POST,
@@ -44,7 +44,7 @@ public class HostSession extends GameSession {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            response.getString("memberId");
+                            memberId = response.getInt(ARG_MEMBER_ID);
                             Log.i(logTag, response.toString());
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -60,9 +60,24 @@ public class HostSession extends GameSession {
         queue.add(startRequest);
     }
 
-    public void setCurrentCard(Card card) {
-        // D
-        // Delete current card from Board
+    public void setCurrentCard(final String cardId) {
+        Map<String, String> jsonParams = new HashMap<String, String>();
+        jsonParams.put(ARG_CARD_ID, gameBoard.getId());
+        jsonParams.put(ARG_MEMBER_ID, "" + memberId);
+        CustomJsonObjRequest startRequest = new CustomJsonObjRequest(Request.Method.POST,
+                createURL(SET_CURRENT_CARD).asString(), jsonParams,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.i(logTag,"Successfully set current card to: " + cardId);
+                    }
+                }, new Response.ErrorListener() {
+            public void onErrorResponse(VolleyError error) {
+                Log.i(logTag,"Failed to set current card to " + cardId);
+            }
+
+        });
+        queue.add(startRequest);
     }
 
     public void getCurrentRatings() {

@@ -8,6 +8,7 @@ public class ServerURL {
 
     public static final String API_URL = "http://agile.project.domein.co.at";
 
+    //Base URLs
     public static final String START_SESSION = "/startNewSession"; // amountOfMembers, trelloBoardId
     public static final String REGISTER_MEMBER = "/registerMember";
     public static final String SET_CURRENT_CARD = "/selectNewCard"; // cardId, :memberId
@@ -19,8 +20,11 @@ public class ServerURL {
     public static final String GET_CURRENT_CARD_RATINGS = "/getAllRatingsForCurrentCard"; //:memberId
     public static final String GET_ALL_RATINGS = "/getAllRatings"; // :memberid
 
-
-
+    //Parameters
+    public static final String ARG_BOARD_ID = "trelloBoardId";
+    public static final String ARG_NR_OF_PLAYERS = "amountOfMembers";
+    public static final String ARG_MEMBER_ID = "memberId";
+    public static final String ARG_CARD_ID = "cardId";
 
     private String baseURL;
     private Argument[] args = {};
