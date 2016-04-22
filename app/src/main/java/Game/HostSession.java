@@ -74,15 +74,16 @@ public class HostSession extends GameSession {
     }
 
     public void resetGame() {
-        JsonObjectRequest startRequest = new JsonObjectRequest(Request.Method.POST,
+        JsonObjectRequest startRequest = new JsonObjectRequest(Request.Method.GET,
                 createURL(RESET_GAME).asString(), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        Log.i(logTag,"Successfully reset");
                     }
                 }, new Response.ErrorListener() {
             public void onErrorResponse(VolleyError error) {
-                Log.i(logTag,"Failed to start session");
+                Log.i(logTag,"Failed to reset session");
             }
 
         });
