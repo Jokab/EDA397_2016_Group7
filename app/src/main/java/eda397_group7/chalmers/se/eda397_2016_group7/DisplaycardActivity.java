@@ -32,6 +32,26 @@ public class DisplaycardActivity extends AppCompatActivity {
         final int[] rateResult = {0};
         final TextView ratingResult =
                 (TextView) findViewById(R.id.rateResult);
+        createRatingListener(rateResult, ratingResult);
+
+        Button submitButton = (Button) findViewById(R.id.submitRateButton);
+        createSubmitListener(rateResult[0], submitButton);
+    }
+
+    private void createSubmitListener(final int i, Button submitButton) {
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (i == 0) {
+                    Toast.makeText(getApplicationContext(), "Please rate the card", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Thanks for the rating", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void createRatingListener(final int[] rateResult, final TextView ratingResult) {
         ratingResult.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -46,19 +66,6 @@ public class DisplaycardActivity extends AppCompatActivity {
                 rateResult[0] = Integer.parseInt(ratingResult.getText().toString());
             }
         });
-
-        Button submitButton = (Button) findViewById(R.id.submitRateButton);
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if (rateResult[0] == 0) {
-                    Toast.makeText(getApplicationContext(), "Please rate the card", Toast.LENGTH_SHORT).show();
-
-                } else {
-                    Toast.makeText(getApplicationContext(), "Thanks for the rating", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
     }
 
 }

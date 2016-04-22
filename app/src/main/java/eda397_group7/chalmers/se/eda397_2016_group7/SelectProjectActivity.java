@@ -34,45 +34,58 @@ public class SelectProjectActivity extends AppCompatActivity {
         final ListView myList =
                 (ListView) findViewById(R.id.listViewOfProjects);
 
+        createSelectedProjectListener(selectedProject, myList);
+        myList.setAdapter(myAdapter);
+
+        final int[] players = {0};
+        final TextView numberOfPlayersField =
+                (TextView) findViewById(R.id.NumberOfPlayers);
+        createNumberPlayersListener(players, numberOfPlayersField);
+
+        Button devButton = (Button) findViewById(R.id.startGameButton);
+        createStartButtonListener(selectedProject[0], players[0], devButton);
+
+        Button debugButton = (Button) findViewById(R.id.select_project_debugbutton);
+        createDebugButtonListener(selectedProject, debugButton);
+    }
+
+    private void createSelectedProjectListener(final String[] selectedProject, final ListView myList) {
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selectedProject[0] = (String) myList.getItemAtPosition(position);
             }
         });
-        myList.setAdapter(myAdapter);
+    }
 
-        final int[] players = {0};
-        final TextView numberOfPlayersField =
-                (TextView) findViewById(R.id.NumberOfPlayers);
+    private void createNumberPlayersListener(final int[] players, final TextView numberOfPlayersField) {
         numberOfPlayersField.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {  }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {  }
 
             @Override
             public void afterTextChanged(Editable s) {
                 players[0] = Integer.parseInt(numberOfPlayersField.getText().toString());
             }
         });
+    }
 
-        Button devButton = (Button) findViewById(R.id.startGameButton);
+    private void createStartButtonListener(final String s, final int player, Button devButton) {
         devButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (selectedProject[0].isEmpty() || players[0] == 0) {
+                if (s.isEmpty() || player == 0) {
                     Toast.makeText(getApplicationContext(), "Select project and number of players", Toast.LENGTH_SHORT).show();
-
                 } else {
                     startActivity(new Intent(SelectProjectActivity.this, DisplayProjectCardsActivity.class));
                 }
             }
         });
+    }
 
-        Button debugButton = (Button) findViewById(R.id.select_project_debugbutton);
+    private void createDebugButtonListener(final String[] selectedProject, Button debugButton) {
         debugButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,5 +93,4 @@ public class SelectProjectActivity extends AppCompatActivity {
             }
         });
     }
-
 }
