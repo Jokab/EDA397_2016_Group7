@@ -21,6 +21,8 @@ import eda397_group7.chalmers.se.eda397_2016_group7.R;
 
 public class SelectProjectActivity extends AppCompatActivity {
 
+    private static final String DEBUG_PROJECT_NAME = "Testboard";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,8 +66,8 @@ public class SelectProjectActivity extends AppCompatActivity {
             }
         });
 
-        Button DevButton = (Button) findViewById(R.id.startGameButton);
-        DevButton.setOnClickListener(new View.OnClickListener() {
+        Button devButton = (Button) findViewById(R.id.startGameButton);
+        devButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (selectedProject[0].isEmpty() || players[0] == 0) {
                     Toast.makeText(getApplicationContext(), "Select project and number of players", Toast.LENGTH_SHORT).show();
@@ -76,6 +78,13 @@ public class SelectProjectActivity extends AppCompatActivity {
             }
         });
 
+        Button debugButton = (Button) findViewById(R.id.select_project_debugbutton);
+        debugButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedProject[0] = DEBUG_PROJECT_NAME;
+            }
+        });
     }
 
 }
