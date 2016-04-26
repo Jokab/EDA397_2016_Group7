@@ -21,40 +21,152 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
 
-    <GridView
+    <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/ratingListGrid"
+        android:id="@+id/rating_listview"
         android:layout_below="@+id/textView6"
         android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/textView6"
-        android:choiceMode="none" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/textView6" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/results_mod_rateagain"
-        android:id="@+id/rateCardAgain"
-        android:layout_below="@+id/textView9"
-        android:layout_toEndOf="@+id/ratingListGrid"
-        android:layout_marginTop="35dp" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/textView6">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/results_mod_nextcard"
-        android:id="@+id/moveNextCard"
-        android:layout_below="@+id/rateCardAgain"
-        android:layout_toEndOf="@+id/ratingListGrid"
-        android:layout_marginTop="40dp" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/results_mod_std"
-        android:id="@+id/textView9"
-        android:layout_below="@+id/textView6"
-        android:layout_toEndOf="@+id/ratingListGrid" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/results_std_label"
+                        android:id="@+id/textView9"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/results_std_value"
+                        android:id="@+id/results_std_value"
+                        android:layout_weight="0" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/results_median_label"
+                        android:id="@+id/textView13"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/results_median_value"
+                        android:id="@+id/results_median_value" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/results_average_label"
+                        android:id="@+id/textView15"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/results_avg_value"
+                        android:id="@+id/results_avg_value" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/results_modal_label"
+                        android:id="@+id/textView18"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/results_modal_value"
+                        android:id="@+id/results_modal_value" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/results_rating_label"
+                android:id="@+id/textView11"
+                android:textSize="20sp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText3"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/results_mod_nextcard"
+                android:id="@+id/submit_rating" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/results_mod_rateagain"
+                android:id="@+id/rateCardAgain"
+                android:layout_marginBottom="71dp" />
+
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

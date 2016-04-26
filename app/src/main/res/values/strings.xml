@@ -14,12 +14,21 @@
     <string name="select_project_mod_startgame_button">Start Game</string>
     <string name="login_password">Password:</string>
     <string name="login_username">User Name:</string>
-    <string name="results_mod_ratings">Ratings for the card:</string>
-    <string name="results_mod_rateagain">Rate the card again</string>
-    <string name="results_mod_nextcard">Move to the Next Card</string>
+    <string name="results_mod_ratings">Ratings for the card</string>
+    <string name="results_mod_rateagain">Redo rating</string>
+    <string name="results_mod_nextcard">Submit rating and pick new card</string>
     <string name="results_mod_std">The standard deviation:</string>
     <string name="proj_cards_title">Project cards:</string>
     <string name="chooserole_title">Choose role:</string>
     <string name="chooserole_dev">Developer</string>
     <string name="chooserole_mod">Moderator</string>
+    <string name="results_std_label">Std</string>
+    <string name="results_median_label">Median</string>
+    <string name="results_average_label">Average</string>
+    <string name="results_modal_label">Modal</string>
+    <string name="results_std_value">Stdval</string>
+    <string name="results_median_value">Medianval</string>
+    <string name="results_avg_value">Avgval</string>
+    <string name="results_modal_value">Modalval</string>
+    <string name="results_rating_label">Card rating</string>
 </resources>
