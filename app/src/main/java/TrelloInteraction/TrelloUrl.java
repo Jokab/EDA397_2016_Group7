@@ -5,6 +5,9 @@ import android.util.Log;
 
 import java.util.regex.Matcher;
 
+/**
+ * Helper class to construct requests to Trello
+ */
 public class TrelloUrl {
 
     public static final String API_URL = "https://api.trello.com/1";

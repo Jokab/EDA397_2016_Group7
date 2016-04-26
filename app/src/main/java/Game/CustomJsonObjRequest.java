@@ -13,6 +13,9 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
+/**
+ * A custom volley request, sends params in a map and retrieves a JSONObject
+ */
 public class CustomJsonObjRequest extends Request<JSONObject> {
 
     private Listener<JSONObject> listener;

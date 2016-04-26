@@ -36,6 +36,33 @@ public class PHPActivity extends AppCompatActivity {
         Button newSession = (Button) findViewById(R.id.newSession);
         Button selectCard = (Button) findViewById(R.id.selectCard);
         Button resetSession = (Button) findViewById(R.id.resetButton);
+        Button setCard = (Button) findViewById(R.id.setCard);
+        Button getCard = (Button) findViewById(R.id.getCard);
+        final TextView t = (TextView) findViewById(R.id.phpText);
+
+        if(getCard != null) {
+            getCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        host.getCurrentCard();
+                        t.setText(host.getCurrentCardID());
+                    } catch (Exception ex) { }
+
+                }
+            });
+        }
+
+        if(setCard != null) {
+            setCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        host.setCurrentCard("testcard");
+                    } catch (Exception ex) { }
+                }
+            });
+        }
 
         if (newSession != null) {
             newSession.setOnClickListener(new View.OnClickListener() {
@@ -43,8 +70,7 @@ public class PHPActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     try {
                         host.startSession(NUMBER_OF_PLAYERS);
-                        TextView t = (TextView) findViewById(R.id.trello_text);
-                        t.setText(primaryBoard.getCard());
+                        TextView t = (TextView) findViewById(R.id.phpText);
                     } catch (Exception ex) { }
                 }
             });

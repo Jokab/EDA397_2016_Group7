@@ -50,4 +50,22 @@
         android:layout_alignParentTop="true"
         android:layout_alignLeft="@+id/selectCard"
         android:layout_alignStart="@+id/selectCard" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set Card"
+        android:id="@+id/setCard"
+        android:layout_below="@+id/newSession"
+        android:layout_alignLeft="@+id/newSession"
+        android:layout_alignStart="@+id/newSession" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get Card"
+        android:id="@+id/getCard"
+        android:layout_below="@+id/newSession"
+        android:layout_toLeftOf="@+id/selectCard"
+        android:layout_toStartOf="@+id/selectCard" />
 </RelativeLayout>

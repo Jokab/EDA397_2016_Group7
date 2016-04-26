@@ -3,31 +3,23 @@ package TrelloInteraction;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
-import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-import eda397_group7.chalmers.se.eda397_2016_group7.R;
-
-/**
- * Created by lundenant on 2016-04-19.
- */
 public class Board implements Parcelable{
 
     private String id;
     private String name;
-    private List<Card> cards = new ArrayList<>();
+    private Map<String, Card> cards = new HashMap<>();
 
     public Board(String id) {
         this.id = id;
@@ -52,7 +44,7 @@ public class Board implements Parcelable{
 
     public void updateCards() {
         JsonArrayRequest cardsRequest = new JsonArrayRequest(
-                TrelloManagerS.INSTANCE.getBoard(id, Argument.arg("fields", "name,desc")),
+                TrelloManagerS.INSTANCE.getBoardCards(id, Argument.arg("fields", "name,desc")),
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
@@ -68,7 +60,7 @@ public class Board implements Parcelable{
 
     }
     public void addCard(Card card) {
-        cards.add(card);
+        cards.put(card.getName(), card);
     }
 
     public void JArrayToCards(JSONArray array) {
@@ -83,14 +75,13 @@ public class Board implements Parcelable{
         }
     }
 
-    public String getCard(){
-        String cardName = "";
+    public Card getCard(String cardName){
         try{
-            cardName = cards.get(0).getName();
+            return(cards.get(cardName));
         }catch (Exception e) {
             Log.i("Card array empty", null);
         }
-        return cardName;
+        return null;
     }
 
     public String getId() {
@@ -106,6 +97,6 @@ public class Board implements Parcelable{
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(id);
         parcel.writeString(name);
-        parcel.writeList(cards);
+        //parcel.writeList(cards);
     }
 }
