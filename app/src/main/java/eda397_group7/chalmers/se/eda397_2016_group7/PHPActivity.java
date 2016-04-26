@@ -71,7 +71,6 @@ public class PHPActivity extends AppCompatActivity {
                     try {
                         host.startSession(NUMBER_OF_PLAYERS);
                         TextView t = (TextView) findViewById(R.id.phpText);
-                        t.setText(primaryBoard.getCard());
                     } catch (Exception ex) { }
                 }
             });
