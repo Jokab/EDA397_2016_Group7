@@ -43,7 +43,7 @@ public class SelectProjectActivity extends AppCompatActivity {
         createNumberPlayersListener(players, numberOfPlayersField);
 
         Button devButton = (Button) findViewById(R.id.startGameButton);
-        createStartButtonListener(selectedProject[0], players[0], devButton);
+        createStartButtonListener(selectedProject, players, devButton);
 
         Button debugButton = (Button) findViewById(R.id.select_project_debugbutton);
         createDebugButtonListener(selectedProject, debugButton);
@@ -73,10 +73,10 @@ public class SelectProjectActivity extends AppCompatActivity {
         });
     }
 
-    private void createStartButtonListener(final String s, final int player, Button devButton) {
+    private void createStartButtonListener(final String[] s, final int[] player, Button devButton) {
         devButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (s.isEmpty() || player == 0) {
+                if (s[0].isEmpty() || player[0] == 0) {
                     Toast.makeText(getApplicationContext(), "Select project and number of players", Toast.LENGTH_SHORT).show();
                 } else {
                     startActivity(new Intent(SelectProjectActivity.this, DisplayProjectCardsActivity.class));
