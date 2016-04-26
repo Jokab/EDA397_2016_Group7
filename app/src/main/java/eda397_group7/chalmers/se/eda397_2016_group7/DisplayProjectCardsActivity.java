@@ -1,5 +1,6 @@
 package eda397_group7.chalmers.se.eda397_2016_group7;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,6 +16,8 @@ import eda397_group7.chalmers.se.eda397_2016_group7.R;
 
 public class DisplayProjectCardsActivity extends AppCompatActivity {
 
+    public static final String[] TEST_CARDS_LIST_DATA = new String[]{"Card A", "Card B", "Card C"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,12 +25,11 @@ public class DisplayProjectCardsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        String[] myStringArray = {"Card A", "Card B", "Card C"};
         final String[] selectedCard = {""};
         ArrayAdapter<String> myAdapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_activated_1,
-                myStringArray);
+                TEST_CARDS_LIST_DATA);
         final ListView myList =
                 (ListView) findViewById(R.id.listViewOfProjectsCards);
 
@@ -35,7 +37,7 @@ public class DisplayProjectCardsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selectedCard[0] = (String) myList.getItemAtPosition(position);
-                Toast.makeText(getApplicationContext(), (String) myList.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(DisplayProjectCardsActivity.this, DisplayResultsActivity.class));
             }
         });
         myList.setAdapter(myAdapter);

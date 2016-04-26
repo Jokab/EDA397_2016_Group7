@@ -7,4 +7,19 @@
     <string name="title_activity_select_project">SelectProject</string>
     <string name="title_activity_display_project_cards">DisplayProjectCards</string>
     <string name="login_with_trello">Login with Trello</string>
+    <string name="displaycard_dev_title">Please rate the following card:</string>
+    <string name="displaycard_dev_submit_button">Submit</string>
+    <string name="select_project_mod_title">List of projects:</string>
+    <string name="select_project_mod_numplayers_text">Number of players:</string>
+    <string name="select_project_mod_startgame_button">Start Game</string>
+    <string name="login_password">Password:</string>
+    <string name="login_username">User Name:</string>
+    <string name="results_mod_ratings">Ratings for the card:</string>
+    <string name="results_mod_rateagain">Rate the card again</string>
+    <string name="results_mod_nextcard">Move to the Next Card</string>
+    <string name="results_mod_std">The standard deviation:</string>
+    <string name="proj_cards_title">Project cards:</string>
+    <string name="chooserole_title">Choose role:</string>
+    <string name="chooserole_dev">Developer</string>
+    <string name="chooserole_mod">Moderator</string>
 </resources>

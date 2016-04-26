@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Project cards:"
+        android:text="@string/proj_cards_title"
         android:id="@+id/textView8"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
@@ -26,5 +26,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/listViewOfProjectsCards"
         android:layout_below="@+id/textView8"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:choiceMode="singleChoice" />
 </RelativeLayout>
