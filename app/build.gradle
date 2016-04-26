@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "eda397_group7.chalmers.se.eda397_2016_group7"
-        minSdkVersion 16
+        minSdkVersion 18
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"

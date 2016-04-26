@@ -8,27 +8,17 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.content.Intent;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import Game.HostSession;
-import TrelloInteraction.Argument;
 import TrelloInteraction.Board;
 import TrelloInteraction.TrelloAuthenticationConstants;
 import TrelloInteraction.TrelloManagerS;
@@ -62,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferences = this.getSharedPreferences(
                 "authorizeprefs", Context.MODE_PRIVATE);
         String authtoken = sharedPreferences.getString("authtoken", "empty");
-        if(!authtoken.equals("empty")){
+        if (!authtoken.equals("empty")) {
             Toast.makeText(this, "already authorized", Toast.LENGTH_LONG).show();
         }
 
@@ -71,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         //Need to set this up once, unless
         TrelloManagerS.INSTANCE.init(TrelloAuthenticationConstants.appKey, "babblish");
         if (trelloLoginButton != null) {
-            trelloLoginButton.setOnClickListener(   new View.OnClickListener() {
+            trelloLoginButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
@@ -121,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (uri != null && uri.toString().startsWith("ase://oauthresponse")) {
             String[] uriParts = uri.toString().split("#token=");
-            if(uriParts.length > 0){
+            if (uriParts.length > 0) {
                 sharedPreferences = this.getSharedPreferences(
                         "authorizeprefs", Context.MODE_PRIVATE);
                 code = uriParts[1];
