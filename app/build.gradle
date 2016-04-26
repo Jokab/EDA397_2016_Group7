@@ -1,29 +1,16 @@
 apply plugin: 'com.android.application'
 
-
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
 
     defaultConfig {
         applicationId "eda397_group7.chalmers.se.eda397_2016_group7"
-        minSdkVersion 16
+        minSdkVersion 18
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
     }
-
-    packagingOptions {
-        exclude 'META-INF/DEPENDENCIES.txt'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/notice.txt'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/license.txt'
-        exclude 'META-INF/spring.handlers'
-        exclude 'META-INF/spring.schemas'
-        exclude 'META-INF/spring.tooling'
-    }
-
     buildTypes {
         release {
             minifyEnabled false

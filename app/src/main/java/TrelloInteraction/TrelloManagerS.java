@@ -8,9 +8,8 @@ import static TrelloInteraction.TrelloUrl.GET_BOARD_CARDS;
 import static TrelloInteraction.TrelloUrl.createURL;
 
 /**
- * Singleton that manages Trello API calls.
+ * Construct Trello requests.
  */
-
 public enum TrelloManagerS {
     INSTANCE;
     private String appKey; // Application key used for any Trello API requests
@@ -23,7 +22,13 @@ public enum TrelloManagerS {
         this.authToken = authToken;
     }
 
-    public String getBoard(String boardID, Argument ... args) {
+    /**
+     * Returns a URL for requesting all cards belonging to boardID, with optional args
+     * @param boardID
+     * @param args
+     * @return Request URL
+     */
+    public String getBoardCards(String boardID, Argument ... args) {
         return(enhanceURL(createURL(GET_BOARD_CARDS).params(args).asString(boardID)));
     }
 
