@@ -50,6 +50,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Button LogButton = (Button) findViewById(R.id.LoginButton);
+        LogButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ChooseRoleActivity.class));
+            }
+        });
+
         Button trelloLoginButton = (Button) findViewById(R.id.trello_login);
         sharedPreferences = this.getSharedPreferences(
                 "authorizeprefs", Context.MODE_PRIVATE);
@@ -66,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
             trelloLoginButton.setOnClickListener(   new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     try {
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(TrelloAuthenticationConstants.trelloAuthorizeUrl)));
                     } catch (Exception ex) {
@@ -76,38 +85,7 @@ public class MainActivity extends AppCompatActivity {
             });
         }
         boolean justAuthenticated = checkOAuthReturn(getIntent());
-
-        Button trelloTestButton = (Button) findViewById(R.id.trello_api);
-        if (trelloTestButton != null) {
-            trelloTestButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        host = new HostSession(primaryBoard.getId(), 1);
-                        primaryBoard.updateCards();
-                        TextView t = (TextView) findViewById(R.id.trello_text);
-                        t.setText(primaryBoard.getCard());
-                    } catch (Exception ex) {
-                    }
-                }
-            });
-        }
-
-        Button phpButton = (Button) findViewById(R.id.phpButton);
-        if (phpButton != null) {
-            phpButton.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v){
-                    Intent i = new Intent(MainActivity.this, PHPActivity.class);
-                    i.putExtra("board", boardID);
-                    startActivity(i);
-
-                }
-            });
-        }
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

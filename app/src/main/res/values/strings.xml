@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">EDA397_2016_Group7</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_choose_role">ChooseRole</string>
+    <string name="title_activity_displaycard">DisplaycardActivity</string>
+    <string name="title_activity_display_results">DisplayResults</string>
+    <string name="title_activity_select_project">SelectProject</string>
+    <string name="title_activity_display_project_cards">DisplayProjectCards</string>
     <string name="login_with_trello">Login with Trello</string>
 </resources>
