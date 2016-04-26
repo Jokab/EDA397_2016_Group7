@@ -42,7 +42,8 @@
         <activity
             android:name=".DisplayProjectCardsActivity"
             android:label="@string/title_activity_display_project_cards"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".SelectProjectActivity"/>
     </application>
 
 </manifest>
