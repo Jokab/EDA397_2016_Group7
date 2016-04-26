@@ -18,12 +18,11 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import TrelloInteraction.Argument;
-import TrelloInteraction.Card;
-import TrelloInteraction.TrelloManagerS;
-import TrelloInteraction.VolleyManager;
-
 import static Game.ServerURL.*;
+
+/**
+ * A host specific game session
+ */
 public class HostSession extends GameSession {
 
 
@@ -32,6 +31,10 @@ public class HostSession extends GameSession {
         startSession(nrOfPlayers);
     }
 
+    /**
+     * Starts a session on the game server
+     * @param nrOfPlayers
+     */
     public void startSession(int nrOfPlayers) {
         Map<String, String> jsonParams = new HashMap<String, String>();
         jsonParams.put(ARG_NR_OF_PLAYERS,""+nrOfPlayers);
@@ -104,7 +107,4 @@ public class HostSession extends GameSession {
         });
         queue.add(startRequest);
     }
-
-
-
 }
