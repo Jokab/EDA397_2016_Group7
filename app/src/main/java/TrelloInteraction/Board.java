@@ -15,19 +15,21 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
-public class Board implements Parcelable{
+public class Board {
 
     private String id;
     private String name;
-    public ArrayList<Card> cards = new ArrayList<Card>();
-    //private Map<String, Card> cards = new HashMap<>();
+    //public ArrayList<Card> cards = new ArrayList<Card>();
+    private Map<String, Card> cards = new HashMap<>();
     private String logTag = "Board LOG";
 
 
     public Board(String id) {
         this.id = id;
     }
+    /*
 
     public Board(Parcel in) {
         id = in.readString();
@@ -46,7 +48,7 @@ public class Board implements Parcelable{
             return new Board[size];
         }
     };
-
+    */
     public void updateCards() {
         JsonArrayRequest cardsRequest = new JsonArrayRequest(
                 TrelloManagerS.INSTANCE.getBoardCards(id, Argument.arg("fields", "name,desc")),
@@ -57,7 +59,7 @@ public class Board implements Parcelable{
                     }
                 }, new Response.ErrorListener() {
             public void onErrorResponse(VolleyError error) {
-                Log.i(logTag, "Board Error: Could not update cards for board " + name + ", error cause:" + error.getCause().toString());
+                Log.i(logTag, "Board Error: Could not update cards for board " + name );
             }
 
         });
@@ -65,8 +67,8 @@ public class Board implements Parcelable{
 
     }
     public void addCard(Card card) {
-        cards.add(card);
-        //cards.put(card.getName(), card);
+       // cards.add(card);
+        cards.put(card.getName(), card);
     }
 
     public void JArrayToCards(JSONArray array) {
@@ -81,10 +83,15 @@ public class Board implements Parcelable{
         }
     }
 
+    public String[] getCardNames() {
+        Set<String> names = cards.keySet();
+        return names.toArray(new String[names.size()]);
+    }
+
     public Card getCard(String cardName){
         try{
-            return(cards.get(0));
-            //return(cards.get(cardName));
+          //  return(cards.get(0));
+            return(cards.get(cardName));
         }catch (Exception e) {
             Log.i(logTag, "Card array empty");
         }
@@ -94,7 +101,7 @@ public class Board implements Parcelable{
     public String getId() {
         return id;
     }
-
+    /*
     @Override
     public int describeContents() {
         return 0;
@@ -106,4 +113,5 @@ public class Board implements Parcelable{
         parcel.writeString(name);
         parcel.writeList(cards);
     }
+    */
 }

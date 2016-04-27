@@ -18,6 +18,8 @@ import com.android.volley.RequestQueue;
 
 import org.json.JSONObject;
 
+import Game.GameSession;
+import Game.GameSessionHolder;
 import Game.HostSession;
 import TrelloInteraction.Board;
 import TrelloInteraction.Card;
@@ -49,16 +51,17 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(MainActivity.this, ChooseRoleActivity.class);
 
                 //add testcard to board
-                primaryBoard.addCard(new Card("cardId", "cardName", "cardDesc"));
+               // primaryBoard.addCard(new Card("cardId", "cardName", "cardDesc"));
                 //get card
                 //Card cardz = primaryBoard.getCard("cardName");
                 //Log.i(logTag, cardz.getName());
 
-                i.putExtra("board", primaryBoard);
+               // i.putExtra("board", primaryBoard);
 
                 startActivity(i);
             }
         });
+
 
         Button trelloLoginButton = (Button) findViewById(R.id.trello_login);
         sharedPreferences = this.getSharedPreferences(
@@ -70,8 +73,12 @@ public class MainActivity extends AppCompatActivity {
 
         //Need to set this up ONCE.
         queue = VolleyManager.getInstance(this.getApplicationContext()).getRequestQueue();
-        //Need to set this up once, unless
         TrelloManagerS.INSTANCE.init(TrelloAuthenticationConstants.appKey, "babblish");
+        GameSessionHolder.getInstance().setSession(new HostSession() {
+        });
+        ((HostSession) GameSessionHolder.getInstance().getSession()).resetGame();
+
+
         if (trelloLoginButton != null) {
             trelloLoginButton.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -38,19 +38,20 @@ import static Game.ServerURL.createURL;
 /**
  * A game session.
  */
-public class GameSession {
+public abstract class GameSession {
 
     protected Board gameBoard;
     protected String currentCardId;
     protected int memberId;
     protected RequestQueue queue = VolleyManager.getInstance(null).getRequestQueue();
     protected String logTag = "Game Session Log";
+
     public GameSession(String boardId) {
         gameBoard = new Board(boardId);
     }
     public GameSession() { }
 
-    public ArrayList<Board> board = new ArrayList<Board>();
+   // public ArrayList<Board> board = new ArrayList<Board>();
     /*
 
     public GameSession(Parcel in){

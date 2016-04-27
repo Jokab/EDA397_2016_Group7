@@ -14,10 +14,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import Game.GameSessionHolder;
+import Game.HostSession;
+
 public class SelectProjectActivity extends AppCompatActivity {
 
-    private static final String DEBUG_PROJECT_NAME = "Testboard";
+    private static final String DEBUG_PROJECT_ID = "l56NCOG9";
     private static final String[] TEST_PROJECT_LIST_DATA = new String[]{"Aasdasdasd asdas asdsa", "B", "C"};
+    private final String[] selectedProject = {""};
+    private final int[] players = {0};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +31,7 @@ public class SelectProjectActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final String[] selectedProject = {""};
+
         ArrayAdapter<String> myAdapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_activated_1,
@@ -37,7 +42,7 @@ public class SelectProjectActivity extends AppCompatActivity {
         createSelectedProjectListener(selectedProject, myList);
         myList.setAdapter(myAdapter);
 
-        final int[] players = {0};
+
         final TextView numberOfPlayersField =
                 (TextView) findViewById(R.id.NumberOfPlayers);
         createNumberPlayersListener(players, numberOfPlayersField);
@@ -79,6 +84,8 @@ public class SelectProjectActivity extends AppCompatActivity {
                 if (s[0].isEmpty() || player[0] == 0) {
                     Toast.makeText(getApplicationContext(), "Select project and number of players", Toast.LENGTH_SHORT).show();
                 } else {
+                    GameSessionHolder.getInstance().setSession(new HostSession(selectedProject[0], players[0]));
+                    GameSessionHolder.getInstance().getSession().getGameBoard().updateCards();
                     startActivity(new Intent(SelectProjectActivity.this, DisplayProjectCardsActivity.class));
                 }
             }
@@ -89,7 +96,7 @@ public class SelectProjectActivity extends AppCompatActivity {
         debugButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectedProject[0] = DEBUG_PROJECT_NAME;
+                selectedProject[0] = DEBUG_PROJECT_ID;
             }
         });
     }

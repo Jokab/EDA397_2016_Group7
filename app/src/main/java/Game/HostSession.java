@@ -25,9 +25,10 @@ import static Game.ServerURL.*;
  */
 public class HostSession extends GameSession {
 
-
+    public HostSession() { };
     public HostSession(String boardId, int nrOfPlayers) {
         super(boardId);
+        // Race condition, I know. Temporary solution
         startSession(nrOfPlayers);
     }
 

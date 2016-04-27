@@ -28,8 +28,8 @@ public class ChooseRoleActivity extends AppCompatActivity {
 
         //Attempt to get objects from intent
         Intent i = getIntent();
-        primaryBoard = i.getParcelableExtra("board");
-        Log.i(logTag, primaryBoard.getCard("cardName").getName());
+       // primaryBoard = i.getParcelableExtra("board");
+       // Log.i(logTag, primaryBoard.getCard("cardName").getName());
 
         devButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
