@@ -46,7 +46,7 @@ public class PHPActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     try {
                         host.getCurrentCard();
-                        t.setText(host.getCurrentCardID());
+                        t.setText(host.getCurrentCardId());
                     } catch (Exception ex) { }
 
                 }

@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 import Game.HostSession;
 import TrelloInteraction.Board;
+import TrelloInteraction.Card;
 import TrelloInteraction.TrelloAuthenticationConstants;
 import TrelloInteraction.TrelloManagerS;
 import TrelloInteraction.VolleyManager;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private JSONObject requestObj;
     final String boardID = "l56NCOG9";
     private Board primaryBoard = new Board(boardID);
+    private String logTag = "MainActivity LOG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +46,17 @@ public class MainActivity extends AppCompatActivity {
         Button LogButton = (Button) findViewById(R.id.LoginButton);
         LogButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ChooseRoleActivity.class));
+                Intent i = new Intent(MainActivity.this, ChooseRoleActivity.class);
+
+                //add testcard to board
+                primaryBoard.addCard(new Card("cardId", "cardName", "cardDesc"));
+                //get card
+                //Card cardz = primaryBoard.getCard("cardName");
+                //Log.i(logTag, cardz.getName());
+
+                i.putExtra("board", primaryBoard);
+
+                startActivity(i);
             }
         });
 
@@ -66,7 +78,8 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
 
                     try {
-                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(TrelloAuthenticationConstants.trelloAuthorizeUrl)));
+                        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(TrelloAuthenticationConstants.trelloAuthorizeUrl));
+                        startActivity(i);
                     } catch (Exception ex) {
                         Toast.makeText(MainActivity.this, "Invalid", Toast.LENGTH_LONG).show();
                         Log.e("Dashboard no auth", "Cannot initiate communication to get the request token\nException: " + ex.getClass().getName() + "\nMessage: " + ex.getMessage());
