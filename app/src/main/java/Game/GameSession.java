@@ -32,19 +32,6 @@ public abstract class GameSession {
     }
     public GameSession() { }
 
-   // public ArrayList<Board> board = new ArrayList<Board>();
-    /*
-
-    public GameSession(Parcel in){
-        in.readTypedList(board, Board.CREATOR);
-        memberId = in.readInt();
-        currentCardId = in.readString();
-     }
-
-     */
-    /**
-     * Retrieves the current card id from the game server
-     */
     public void getCurrentCard() {
         CustomJsonObjRequest startRequest = new CustomJsonObjRequest(Request.Method.GET,
                 createURL(GET_CURRENT_CARD).asString(), null,
@@ -83,28 +70,4 @@ public abstract class GameSession {
     public Board getGameBoard() {
         return gameBoard;
     }
-
-    /*
-    public int describeContents(){
-        return 0;
-    }
-
-    public static final Creator<GameSession> CREATOR = new Creator<GameSession>(){
-        @Override
-        public GameSession createFromParcel(Parcel in){
-            return new GameSession(in);
-        }
-
-        @Override
-        public GameSession[] newArray(int size){
-            return new GameSession[size];
-        }
-    };
-
-    public void writeToParcel(Parcel parcel){
-        parcel.writeList(board);
-        parcel.writeInt(memberId);
-        parcel.writeString(currentCardId);
-    }
-    */
 }

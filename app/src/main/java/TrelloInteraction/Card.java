@@ -4,9 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by lundenant on 2016-04-19.
+ * A Trello card
  */
-public class Card implements Parcelable{
+public class Card {
 
     private final String id;
     private final String name;
@@ -18,12 +18,6 @@ public class Card implements Parcelable{
         this.id = id;
         this.name = name;
         this.desc = desc;
-    }
-
-    public Card(Parcel in){
-        id = in.readString();
-        name = in.readString();
-        desc = in.readString();
     }
 
     public int getRating() {
@@ -41,29 +35,4 @@ public class Card implements Parcelable{
     }
 
     public String getId() { return id; }
-
-    @Override
-    public int describeContents(){
-        return 0;
-    }
-
-    public static final Creator<Card> CREATOR = new Creator<Card>() {
-        @Override
-        public Card createFromParcel(Parcel parcel) {
-            return new Card(parcel);
-        }
-
-        @Override
-        public Card[] newArray(int size) {
-            return new Card[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i){
-        parcel.writeString(id);
-        parcel.writeString(name);
-        parcel.writeString(desc);
-    }
-
 }
