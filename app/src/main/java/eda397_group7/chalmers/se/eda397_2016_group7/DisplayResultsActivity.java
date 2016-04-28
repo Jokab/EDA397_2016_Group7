@@ -19,6 +19,7 @@ public class DisplayResultsActivity extends AppCompatActivity {
 
     public static List<String> TEST_RESULTS_LIST_DATA = new ArrayList<>(Arrays.asList(new String[]{"5", "3", "7", "1", "3", "6", "5"}));
     private ArrayAdapter<String> resultsListAdapter;
+    private ListView resultsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,29 +32,16 @@ public class DisplayResultsActivity extends AppCompatActivity {
                 this,
                 android.R.layout.simple_list_item_activated_1,
                 TEST_RESULTS_LIST_DATA);
-        ListView resultsList = (ListView) findViewById(R.id.rating_listview);
+        resultsList = (ListView) findViewById(R.id.rating_listview);
         resultsListAdapter.setNotifyOnChange(true);
         resultsList.setAdapter(resultsListAdapter);
 
         Button nextCard = (Button) findViewById(R.id.submit_rating);
-        nextCard.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Finish destroys this activity and returns to the previous one
-                finish();
-            }
-        });
+        nextCard.setOnClickListener(new NextCardListener());
         Button rateAgain = (Button) findViewById(R.id.rateCardAgain);
-        rateAgain.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                assignRandomDataToList();
-                updateStatistics();
-            }
-        });
-
-
+        rateAgain.setOnClickListener(new RateAgainListener());
 
         updateStatistics();
-
     }
 
     private void updateStatistics() {
@@ -122,4 +110,17 @@ public class DisplayResultsActivity extends AppCompatActivity {
         }
     }
 
+    private class RateAgainListener implements View.OnClickListener {
+        public void onClick(View v) {
+            assignRandomDataToList();
+            updateStatistics();
+        }
+    }
+
+    private class NextCardListener implements View.OnClickListener {
+        public void onClick(View v) {
+            // Finish destroys this activity and returns to the previous one
+            finish();
+        }
+    }
 }
