@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
@@ -27,7 +28,6 @@ public class DisplaycardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_displaycard_developers);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        currentCard = (TextView) findViewById(R.id.currentCard);
 
         ratingResultView = (TextView) findViewById(R.id.rateResult);
         ratingResultView.addTextChangedListener(new RateListener());
@@ -65,12 +65,12 @@ public class DisplaycardActivity extends AppCompatActivity {
 
     private class RefreshListener implements View.OnClickListener {
         public void onClick(View v) {
+            Log.i("RB", "Refresh button set");
             try {
                 GameSessionHolder.getInstance().getSession().getCurrentCard();
                 String id = GameSessionHolder.getInstance().getSession().getCurrentCardId();
                 String name = GameSessionHolder.getInstance().getSession().getGameBoard().getCard(id).getName();
-                currentCard.setText(name);
-                Toast.makeText(getApplicationContext(), "id: " + id + "name: " + name, Toast.LENGTH_SHORT).show();
+                ((TextView) findViewById(R.id.currentCard)).setText(name);
             } catch (NullPointerException e) {
             }
         }

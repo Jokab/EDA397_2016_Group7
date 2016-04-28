@@ -16,6 +16,7 @@ import TrelloInteraction.Board;
 
 import static Game.ServerURL.ARG_MEMBER_ID;
 import static Game.ServerURL.ARG_RATING_ID;
+import static Game.ServerURL.REGISTER_MEMBER;
 import static Game.ServerURL.START_SESSION;
 import static Game.ServerURL.createURL;
 
@@ -57,7 +58,7 @@ public class PlayerSession extends GameSession {
      */
     public void registerToSession() {
         CustomJsonObjRequest registerRequest = new CustomJsonObjRequest(Request.Method.POST,
-                createURL(START_SESSION).asString(), null ,
+                createURL(REGISTER_MEMBER).asString(), null ,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
