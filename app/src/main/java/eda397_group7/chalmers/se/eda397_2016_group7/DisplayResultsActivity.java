@@ -17,7 +17,7 @@ import java.util.Random;
 
 public class DisplayResultsActivity extends AppCompatActivity {
 
-    public static List<String> TEST_RESULTS_LIST_DATA = new ArrayList<>(Arrays.asList(new String[]{"5", "3", "7", "1", "3", "6", "5"}));
+    public static List<String> TEST_RESULTS_LIST_DATA = new ArrayList<>(Arrays.asList(new String[]{"5", "3", "7", "1", "3", "6", "5", "5", "5","5","5","5","5","5","5","5","5"}));
     private ArrayAdapter<String> resultsListAdapter;
     private ListView resultsList;
 
