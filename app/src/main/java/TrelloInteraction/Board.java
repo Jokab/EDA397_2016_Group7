@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -83,9 +84,9 @@ public class Board {
         }
     }
 
-    public String[] getCardNames() {
+    public List<String> getCardNames() {
         Set<String> names = cards.keySet();
-        return names.toArray(new String[names.size()]);
+        return(new ArrayList<>(names));
     }
 
     public Card getCard(String cardName){
