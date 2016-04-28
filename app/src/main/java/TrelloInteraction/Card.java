@@ -35,9 +35,13 @@ public class Card implements Parcelable{
         this.rating = rating;
     }
 
+    public String getDesc() { return desc; }
+
     public String getName() {
         return name;
     }
+
+    public String getId() { return id; }
 
     @Override
     public int describeContents(){

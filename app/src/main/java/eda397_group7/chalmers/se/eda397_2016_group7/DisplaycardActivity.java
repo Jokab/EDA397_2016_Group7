@@ -7,13 +7,19 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ExpandableListView;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import Game.GameSessionHolder;
+import TrelloInteraction.Card;
 
 public class DisplaycardActivity extends AppCompatActivity {
 
     private int rateResult = 0;
     private TextView ratingResultView;
+    private TextView currentCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,19 +27,25 @@ public class DisplaycardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_displaycard_developers);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        currentCard = (TextView) findViewById(R.id.currentCard);
 
         ratingResultView = (TextView) findViewById(R.id.rateResult);
         ratingResultView.addTextChangedListener(new RateListener());
 
+        Button refreshButton = (Button) findViewById(R.id.refreshButton);
+        refreshButton.setOnClickListener(new RefreshListener());
         Button submitButton = (Button) findViewById(R.id.submitRateButton);
         submitButton.setOnClickListener(new SubmitListener());
     }
 
     private class RateListener implements TextWatcher {
         @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
         @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
 
         @Override
         public void afterTextChanged(Editable s) {
@@ -47,6 +59,18 @@ public class DisplaycardActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Please rate the card", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(getApplicationContext(), "Thanks for the rating", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private class RefreshListener implements View.OnClickListener {
+        public void onClick(View v) {
+            try {
+                GameSessionHolder.getInstance().getSession().getCurrentCard();
+                String id = GameSessionHolder.getInstance().getSession().getCurrentCardId();
+                String name = GameSessionHolder.getInstance().getSession().getGameBoard().getCard(id).getName();
+                currentCard.setText(name);
+            } catch (NullPointerException e) {
             }
         }
     }

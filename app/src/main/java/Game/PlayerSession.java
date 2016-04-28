@@ -64,6 +64,7 @@ public class PlayerSession extends GameSession {
                         try {
                             memberId = response.getInt(ServerURL.ARG_MEMBER_ID);
                             setGameBoard(response.getString(ServerURL.ARG_BOARD_ID));
+                            gameBoard.updateCards();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

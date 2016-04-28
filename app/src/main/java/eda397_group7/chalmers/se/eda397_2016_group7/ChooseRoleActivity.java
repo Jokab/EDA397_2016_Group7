@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import Game.GameSessionHolder;
+import Game.PlayerSession;
 import TrelloInteraction.Board;
 
 public class ChooseRoleActivity extends AppCompatActivity {
@@ -24,7 +26,7 @@ public class ChooseRoleActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Button devButton = (Button) findViewById(R.id.ModeratorButton);
+        Button devButton = (Button) findViewById(R.id.DeveloperButton);
 
         //Attempt to get objects from intent
         Intent i = getIntent();
@@ -33,14 +35,17 @@ public class ChooseRoleActivity extends AppCompatActivity {
 
         devButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivity(new Intent(ChooseRoleActivity.this, SelectProjectActivity.class));
+                GameSessionHolder.getInstance().setSession(new PlayerSession());
+                ((PlayerSession) GameSessionHolder.getInstance().getSession()).registerToSession();
+                // TODO: DON'T SWITCH TO DisplaycardActivity unless actually registered
+                startActivity(new Intent(ChooseRoleActivity.this, DisplaycardActivity.class));
             }
         });
 
-        Button modButton = (Button) findViewById(R.id.DeveloperButton);
+        Button modButton = (Button) findViewById(R.id.ModeratorButton);
         modButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivity(new Intent(ChooseRoleActivity.this, DisplaycardActivity.class));
+                startActivity(new Intent(ChooseRoleActivity.this, SelectProjectActivity.class));
             }
         });
     }

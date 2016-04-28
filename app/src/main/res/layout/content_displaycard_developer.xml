@@ -50,4 +50,22 @@
         android:layout_alignBottom="@+id/rateResult"
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@+id/rateResult" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Refresh"
+        android:id="@+id/refreshButton"
+        android:layout_below="@+id/rateResult"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="59dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Currently selected card"
+        android:id="@+id/currentCard"
+        android:layout_below="@+id/textView5"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

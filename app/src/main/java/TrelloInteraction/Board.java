@@ -22,7 +22,6 @@ public class Board {
 
     private String id;
     private String name;
-    //public ArrayList<Card> cards = new ArrayList<Card>();
     private Map<String, Card> cards = new HashMap<>();
     private String logTag = "Board LOG";
 
@@ -30,26 +29,7 @@ public class Board {
     public Board(String id) {
         this.id = id;
     }
-    /*
 
-    public Board(Parcel in) {
-        id = in.readString();
-        name = in.readString();
-        in.readTypedList(cards, Card.CREATOR);
-    }
-
-    public static final Creator<Board> CREATOR = new Creator<Board>() {
-        @Override
-        public Board createFromParcel(Parcel in) {
-            return new Board(in);
-        }
-
-        @Override
-        public Board[] newArray(int size) {
-            return new Board[size];
-        }
-    };
-    */
     public void updateCards() {
         JsonArrayRequest cardsRequest = new JsonArrayRequest(
                 TrelloManagerS.INSTANCE.getBoardCards(id, Argument.arg("fields", "name,desc")),
@@ -68,8 +48,7 @@ public class Board {
 
     }
     public void addCard(Card card) {
-       // cards.add(card);
-        cards.put(card.getName(), card);
+        cards.put(card.getId(), card);
     }
 
     public void JArrayToCards(JSONArray array) {
@@ -89,10 +68,9 @@ public class Board {
         return(new ArrayList<>(names));
     }
 
-    public Card getCard(String cardName){
+    public Card getCard(String id){
         try{
-          //  return(cards.get(0));
-            return(cards.get(cardName));
+            return(cards.get(id));
         }catch (Exception e) {
             Log.i(logTag, "Card array empty");
         }
