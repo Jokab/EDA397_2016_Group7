@@ -80,17 +80,4 @@ public class Board {
     public String getId() {
         return id;
     }
-    /*
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(id);
-        parcel.writeString(name);
-        parcel.writeList(cards);
-    }
-    */
 }

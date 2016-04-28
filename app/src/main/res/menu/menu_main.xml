@@ -8,6 +8,6 @@
         app:showAsAction="never" />
     <item android:id="@+id/action_refresh"
         android:title="Refresh"
-        app:showAsAction="always"
+        app:showAsAction="ifRoom"
         android:icon="@drawable/ic_action_refresh"></item>
 </menu>
