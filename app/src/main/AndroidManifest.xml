@@ -34,11 +34,13 @@
         <activity
             android:name=".DisplayResultsActivity"
             android:label="@string/title_activity_display_results"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".SelectProjectActivity"
             android:label="@string/title_activity_select_project"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".DisplayProjectCardsActivity"
             android:label="@string/title_activity_display_project_cards"

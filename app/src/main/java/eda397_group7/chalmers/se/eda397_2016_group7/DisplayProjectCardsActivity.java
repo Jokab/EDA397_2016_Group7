@@ -1,5 +1,7 @@
 package eda397_group7.chalmers.se.eda397_2016_group7;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +11,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,12 +55,36 @@ public class DisplayProjectCardsActivity extends AppCompatActivity {
         }, 0, 1000);
     }
 
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle("Really exit?")
+                .setMessage("Are you sure you want to exit the session?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        DisplayProjectCardsActivity.super.onBackPressed();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null)
+                .create().show();
+    }
+
     final Runnable myRunnable = new Runnable() {
         public void run() {
             try {
                 cards = GameSessionHolder.getInstance().getSession().getGameBoard().getCardId();
+
                 myAdapter.clear();
                 myAdapter.addAll(cards);
+                if(!cards.isEmpty()) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ((ProgressBar) findViewById(R.id.projectcards_progressbar)).setVisibility(ProgressBar.INVISIBLE);
+                        }
+                    });
+                }
             } catch(NullPointerException e) {
             }
         }
