@@ -63,9 +63,9 @@ public class Board {
         }
     }
 
-    public List<String> getCardNames() {
-        Set<String> names = cards.keySet();
-        return(new ArrayList<>(names));
+    public List<String> getCardId() {
+        Set<String> id = cards.keySet();
+        return(new ArrayList<>(id));
     }
 
     public Card getCard(String id){

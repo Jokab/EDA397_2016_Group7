@@ -3,16 +3,12 @@ package eda397_group7.chalmers.se.eda397_2016_group7;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +16,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import Game.GameSessionHolder;
-import eda397_group7.chalmers.se.eda397_2016_group7.R;
+import Game.HostSession;
 
 public class DisplayProjectCardsActivity extends AppCompatActivity {
 
@@ -58,7 +54,7 @@ public class DisplayProjectCardsActivity extends AppCompatActivity {
     final Runnable myRunnable = new Runnable() {
         public void run() {
             try {
-                cards = GameSessionHolder.getInstance().getSession().getGameBoard().getCardNames();
+                cards = GameSessionHolder.getInstance().getSession().getGameBoard().getCardId();
                 myAdapter.clear();
                 myAdapter.addAll(cards);
             } catch(NullPointerException e) {
@@ -81,6 +77,7 @@ public class DisplayProjectCardsActivity extends AppCompatActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             selectedCard[0] = (String) myList.getItemAtPosition(position);
+            ((HostSession) GameSessionHolder.getInstance().getSession()).setCurrentCard(selectedCard[0]);
             startActivity(new Intent(DisplayProjectCardsActivity.this, DisplayResultsActivity.class));
         }
     }
