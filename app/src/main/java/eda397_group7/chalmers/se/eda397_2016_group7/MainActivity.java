@@ -76,8 +76,6 @@ public class MainActivity extends AppCompatActivity {
         TrelloManagerS.INSTANCE.init(TrelloAuthenticationConstants.appKey, "babblish");
         GameSessionHolder.getInstance().setSession(new HostSession() {
         });
-        ((HostSession) GameSessionHolder.getInstance().getSession()).resetGame();
-
 
         if (trelloLoginButton != null) {
             trelloLoginButton.setOnClickListener(new View.OnClickListener() {
