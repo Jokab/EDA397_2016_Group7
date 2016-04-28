@@ -1,16 +1,13 @@
-package Game;
+package game;
 
 
 import android.util.Log;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,14 +15,15 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import static Game.ServerURL.*;
+import static game.ServerURL.*;
 
 /**
  * A host specific game session
  */
 public class HostSession extends GameSession {
 
-    public HostSession() { };
+    public HostSession() { }
+
     public HostSession(String boardId, int nrOfPlayers) {
         super(boardId);
         // Race condition, I know. Temporary solution
@@ -37,7 +35,7 @@ public class HostSession extends GameSession {
      * @param nrOfPlayers
      */
     public void startSession(int nrOfPlayers) {
-        Map<String, String> jsonParams = new HashMap<String, String>();
+        Map<String, String> jsonParams = new HashMap<>();
         jsonParams.put(ARG_NR_OF_PLAYERS,""+nrOfPlayers);
         jsonParams.put(ARG_BOARD_ID, gameBoard.getId());
 
@@ -85,11 +83,11 @@ public class HostSession extends GameSession {
     }
 
     public void getCurrentRatings() {
-        //
+        // TODO
     }
 
     public void getAllCardRatings() {
-        //Dom req
+        //Dom req TODO
     }
 
     public void resetGame() {

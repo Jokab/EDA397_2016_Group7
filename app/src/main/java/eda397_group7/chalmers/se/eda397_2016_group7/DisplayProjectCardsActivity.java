@@ -12,25 +12,24 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import Game.GameSessionHolder;
-import Game.HostSession;
+import game.GameSessionHolder;
+import game.HostSession;
 
 public class DisplayProjectCardsActivity extends AppCompatActivity {
 
     public static final String[] TEST_CARDS_LIST_DATA = new String[]{"Card A", "Card B", "Card C"};
     private List<String> cards = new ArrayList<>();
     private ArrayAdapter<String> myAdapter;
-    private Handler myHandler = new Handler();
+    private final Handler myHandler = new Handler();
     private int i=0;
     final String[] selectedCard = {""};
-    private ListView myList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +37,7 @@ public class DisplayProjectCardsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        myList = (ListView) findViewById(R.id.listViewOfProjectsCards);
+        ListView myList = (ListView) findViewById(R.id.listViewOfProjectsCards);
 
         myList.setOnItemClickListener(new MyOnItemClickListener(myList));
         myAdapter = new ArrayAdapter<>(
@@ -85,7 +84,7 @@ public class DisplayProjectCardsActivity extends AppCompatActivity {
                         }
                     });
                 }
-            } catch(NullPointerException e) {
+            } catch(NullPointerException e) { e.printStackTrace();
             }
         }
     };

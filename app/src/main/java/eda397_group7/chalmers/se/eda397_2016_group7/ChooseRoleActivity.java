@@ -2,21 +2,17 @@ package eda397_group7.chalmers.se.eda397_2016_group7;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import Game.GameSession;
-import Game.GameSessionHolder;
-import Game.HostSession;
-import Game.PlayerSession;
-import TrelloInteraction.Board;
+import game.GameSessionHolder;
+import game.HostSession;
+import game.PlayerSession;
+import trelloInteraction.Board;
 
 public class ChooseRoleActivity extends AppCompatActivity {
 
@@ -31,11 +27,6 @@ public class ChooseRoleActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Button devButton = (Button) findViewById(R.id.DeveloperButton);
-
-        //Attempt to get objects from intent
-        Intent i = getIntent();
-       // primaryBoard = i.getParcelableExtra("board");
-       // Log.i(logTag, primaryBoard.getCard("cardName").getName());
 
         devButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

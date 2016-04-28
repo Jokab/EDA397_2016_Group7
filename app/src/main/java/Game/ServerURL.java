@@ -1,8 +1,7 @@
-package Game;
+package game;
 
 
-import TrelloInteraction.Argument;
-import TrelloInteraction.TrelloUrl;
+import trelloInteraction.Argument;
 
 
 /**
@@ -31,7 +30,7 @@ public class ServerURL {
     public static final String ARG_CARD_ID = "cardId";
     public static final String ARG_RATING_ID = "rating";
 
-    private String baseURL;
+    private final String baseURL;
     private Argument[] args = {};
 
     private ServerURL(String baseURL) {

@@ -1,4 +1,4 @@
-package TrelloInteraction;
+package trelloInteraction;
 
 public class Argument {
 
@@ -17,16 +17,8 @@ public class Argument {
         return argName;
     }
 
-    public void setArgName(String argName) {
-        this.argName = argName;
-    }
-
     public String getArgValue() {
         return argValue;
-    }
-
-    public void setArgValue(String argValue) {
-        this.argValue = argValue;
     }
 }
 

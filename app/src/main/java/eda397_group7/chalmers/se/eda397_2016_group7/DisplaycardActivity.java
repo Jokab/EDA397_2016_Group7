@@ -8,13 +8,10 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ExpandableListView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import Game.GameSessionHolder;
-import TrelloInteraction.Card;
+import game.GameSessionHolder;
 
 public class DisplaycardActivity extends AppCompatActivity {
 
@@ -71,7 +68,7 @@ public class DisplaycardActivity extends AppCompatActivity {
                 String id = GameSessionHolder.getInstance().getSession().getCurrentCardId();
                 String name = GameSessionHolder.getInstance().getSession().getGameBoard().getCard(id).getName();
                 ((TextView) findViewById(R.id.currentCard)).setText(name);
-            } catch (NullPointerException e) {
+            } catch (NullPointerException e) { e.printStackTrace();
             }
         }
     }

@@ -1,7 +1,5 @@
-package TrelloInteraction;
+package trelloInteraction;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.Log;
 
 import com.android.volley.Response;
@@ -20,10 +18,10 @@ import java.util.Set;
 
 public class Board {
 
-    private String id;
+    private final String id;
     private String name;
-    private Map<String, Card> cards = new HashMap<>();
-    private String logTag = "Board LOG";
+    private final Map<String, Card> cards = new HashMap<>();
+    private final String logTag = "Board LOG";
 
 
     public Board(String id) {

@@ -1,4 +1,4 @@
-package Game;
+package game;
 
 import android.util.Log;
 
@@ -12,13 +12,13 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import TrelloInteraction.Board;
+import trelloInteraction.Board;
 
-import static Game.ServerURL.ARG_MEMBER_ID;
-import static Game.ServerURL.ARG_RATING_ID;
-import static Game.ServerURL.REGISTER_MEMBER;
-import static Game.ServerURL.START_SESSION;
-import static Game.ServerURL.createURL;
+import static game.ServerURL.ARG_MEMBER_ID;
+import static game.ServerURL.ARG_RATING_ID;
+import static game.ServerURL.REGISTER_MEMBER;
+import static game.ServerURL.START_SESSION;
+import static game.ServerURL.createURL;
 
 /**
  * A player specific game session
@@ -33,7 +33,7 @@ public class PlayerSession extends GameSession {
      * @param rating
      */
     public void setRating(int rating) {
-        Map<String, String> jsonParams = new HashMap<String, String>();
+        Map<String, String> jsonParams = new HashMap<>();
         jsonParams.put(ARG_MEMBER_ID,""+memberId);
         jsonParams.put(ARG_RATING_ID, ""+rating);
 

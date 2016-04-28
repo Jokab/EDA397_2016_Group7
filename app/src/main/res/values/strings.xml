@@ -17,7 +17,6 @@
     <string name="results_mod_ratings">Ratings for the card</string>
     <string name="results_mod_rateagain">Redo rating</string>
     <string name="results_mod_nextcard">Submit rating and pick new card</string>
-    <string name="results_mod_std">The standard deviation:</string>
     <string name="proj_cards_title">Project cards:</string>
     <string name="chooserole_title">Choose role:</string>
     <string name="chooserole_dev">Developer</string>
@@ -31,4 +30,5 @@
     <string name="results_avg_value">Avgval</string>
     <string name="results_modal_value">Modalval</string>
     <string name="results_rating_label">Card rating</string>
+    <string name="refresh_default">Refresh</string>
 </resources>

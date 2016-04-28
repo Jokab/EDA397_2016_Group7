@@ -1,17 +1,16 @@
-package TrelloInteraction;
+package trelloInteraction;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 /**
  * Created by lundenant on 2016-04-19.
  */
 public class Card implements Parcelable{
 
-    private String id;
-    private String name;
-    private String desc;
+    private final String id;
+    private final String name;
+    private final String desc;
     private int rating;
     private String logTag = "Card LOG";
 
