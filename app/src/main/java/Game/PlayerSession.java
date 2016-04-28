@@ -56,7 +56,7 @@ public class PlayerSession extends GameSession {
      * Sends a request to game server to registers at the current session
      */
     public void registerToSession() {
-        CustomJsonObjRequest registerRequest = new CustomJsonObjRequest(Request.Method.GET,
+        CustomJsonObjRequest registerRequest = new CustomJsonObjRequest(Request.Method.POST,
                 createURL(START_SESSION).asString(), null ,
                 new Response.Listener<JSONObject>() {
                     @Override

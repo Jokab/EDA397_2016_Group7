@@ -70,6 +70,7 @@ public class DisplaycardActivity extends AppCompatActivity {
                 String id = GameSessionHolder.getInstance().getSession().getCurrentCardId();
                 String name = GameSessionHolder.getInstance().getSession().getGameBoard().getCard(id).getName();
                 currentCard.setText(name);
+                Toast.makeText(getApplicationContext(), "id: " + id + "name: " + name, Toast.LENGTH_SHORT).show();
             } catch (NullPointerException e) {
             }
         }

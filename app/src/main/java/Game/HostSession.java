@@ -66,7 +66,7 @@ public class HostSession extends GameSession {
 
     public void setCurrentCard(final String cardId) {
         Map<String, String> jsonParams = new HashMap<String, String>();
-        jsonParams.put(ARG_CARD_ID, gameBoard.getId());
+        jsonParams.put(ARG_CARD_ID, cardId);
         jsonParams.put(ARG_MEMBER_ID, "" + memberId);
         CustomJsonObjRequest startRequest = new CustomJsonObjRequest(Request.Method.POST,
                 createURL(SET_CURRENT_CARD).asString(), jsonParams,
