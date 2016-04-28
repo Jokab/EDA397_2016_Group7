@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -59,8 +60,17 @@ public class DisplayProjectCardsActivity extends AppCompatActivity {
         public void run() {
             try {
                 cards = GameSessionHolder.getInstance().getSession().getGameBoard().getCardNames();
+
                 myAdapter.clear();
                 myAdapter.addAll(cards);
+                if(!cards.isEmpty()) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ((ProgressBar) findViewById(R.id.projectcards_progressbar)).setVisibility(ProgressBar.INVISIBLE);
+                        }
+                    });
+                }
             } catch(NullPointerException e) {
             }
         }
