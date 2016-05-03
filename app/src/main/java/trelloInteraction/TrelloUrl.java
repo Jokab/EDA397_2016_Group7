@@ -19,6 +19,9 @@ public class TrelloUrl {
     //Cards Base URLs
     public static final String GET_CARD = "/cards/{cardId}?";
 
+    //Get Boards for current user
+    public static final String GET_BOARDS = "/members/me/boards?";
+
 
     private final String baseURL;
     private Argument[] args = {};
@@ -40,6 +43,19 @@ public class TrelloUrl {
     public String asString(String realID) {
         StringBuilder builder = new StringBuilder(API_URL);
         builder.append(baseURL.replaceFirst("((\\{).*?(Id)(\\}))",realID));
+        builder.append(API_KEY_TOKEN_PARAM);
+        for(Argument arg : args){
+            builder.append("&");
+            builder.append(arg.getArgName());
+            builder.append("=");
+            builder.append(arg.getArgValue());
+        }
+        return builder.toString();
+    }
+
+    public String asString() {
+        StringBuilder builder = new StringBuilder(API_URL);
+        builder.append(baseURL);
         builder.append(API_KEY_TOKEN_PARAM);
         for(Argument arg : args){
             builder.append("&");

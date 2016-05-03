@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Need to set this up ONCE.
         RequestQueue queue = VolleyManager.getInstance(this.getApplicationContext()).getRequestQueue();
-        TrelloManagerS.INSTANCE.init(TrelloAuthenticationConstants.appKey, "babblish");
+        TrelloManagerS.INSTANCE.init(TrelloAuthenticationConstants.appKey, authtoken);
         GameSessionHolder.getInstance().setSession(new HostSession() {
         });
 
@@ -132,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
                 code = uriParts[1];
                 sharedPreferences.edit().putString("authtoken", code).apply();
                 returnFromAuth = true;
+                TrelloManagerS.INSTANCE.setAuthToken(code);
             }
             Toast.makeText(this, "Login successful.", Toast.LENGTH_LONG).show();
         }
