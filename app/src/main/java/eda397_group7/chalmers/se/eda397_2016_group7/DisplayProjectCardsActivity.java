@@ -18,8 +18,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import Game.GameSessionHolder;
-import Game.HostSession;
+import game.GameSessionHolder;
+import game.HostSession;
 
 public class DisplayProjectCardsActivity extends AppCompatActivity {
 

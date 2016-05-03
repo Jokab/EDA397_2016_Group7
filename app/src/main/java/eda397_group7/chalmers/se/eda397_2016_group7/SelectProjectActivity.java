@@ -14,8 +14,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import Game.GameSessionHolder;
-import Game.HostSession;
+import game.GameSessionHolder;
+import game.HostSession;
 
 public class SelectProjectActivity extends AppCompatActivity {
 

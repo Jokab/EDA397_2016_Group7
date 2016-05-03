@@ -18,12 +18,12 @@ import com.android.volley.RequestQueue;
 
 import org.json.JSONObject;
 
-import Game.GameSessionHolder;
-import Game.HostSession;
-import TrelloInteraction.Board;
-import TrelloInteraction.TrelloAuthenticationConstants;
-import TrelloInteraction.TrelloManagerS;
-import TrelloInteraction.VolleyManager;
+import game.GameSessionHolder;
+import game.HostSession;
+import trelloInteraction.Board;
+import trelloInteraction.TrelloAuthenticationConstants;
+import trelloInteraction.TrelloManagerS;
+import trelloInteraction.VolleyManager;
 
 public class MainActivity extends AppCompatActivity {
 

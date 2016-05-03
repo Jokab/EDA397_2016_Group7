@@ -1,4 +1,4 @@
-package TrelloInteraction;
+package trelloInteraction;
 
 public class TrelloAuthenticationConstants {
     public final static String appKey = "ff0bd4ea77916c91b322590c767a684d";

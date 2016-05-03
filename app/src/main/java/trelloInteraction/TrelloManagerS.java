@@ -1,7 +1,7 @@
-package TrelloInteraction;
+package trelloInteraction;
 
-import static TrelloInteraction.TrelloUrl.GET_BOARD_CARDS;
-import static TrelloInteraction.TrelloUrl.createURL;
+import static trelloInteraction.TrelloUrl.GET_BOARD_CARDS;
+import static trelloInteraction.TrelloUrl.createURL;
 
 /**
  * Construct Trello requests.

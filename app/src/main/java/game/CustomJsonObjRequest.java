@@ -1,4 +1,4 @@
-package Game;
+package game;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
