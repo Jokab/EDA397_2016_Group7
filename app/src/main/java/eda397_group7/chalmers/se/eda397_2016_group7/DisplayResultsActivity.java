@@ -13,12 +13,15 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
+
+import game.GameSessionHolder;
+import game.HostSession;
 
 public class DisplayResultsActivity extends AppCompatActivity {
 
-    public static final List<String> TEST_RESULTS_LIST_DATA = new ArrayList<>(Arrays.asList(new String[]{"5", "3", "7", "1", "3", "6", "5", "5", "5","5","5","5","5","5","5","5","5"}));
+    public static final List<String> resultListData = new ArrayList<>(Arrays.asList(new String[]{"5", "3", "7", "1", "3", "6", "5", "5", "5","5","5","5","5","5","5","5","5"}));
     private ArrayAdapter<String> resultsListAdapter;
+    private int nrOfPlayers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +30,17 @@ public class DisplayResultsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        nrOfPlayers = ((HostSession)GameSessionHolder.getInstance().getSession()).getNrOfPlayers();
+
+        resultListData.clear();
+        for(int i = 0; i < nrOfPlayers;i++){
+            resultListData.add("0");
+        }
+
         resultsListAdapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_activated_1,
-                TEST_RESULTS_LIST_DATA);
+                resultListData);
         ListView resultsList = (ListView) findViewById(R.id.rating_listview);
         resultsListAdapter.setNotifyOnChange(true);
         resultsList.setAdapter(resultsListAdapter);
@@ -44,9 +54,9 @@ public class DisplayResultsActivity extends AppCompatActivity {
     }
 
     private void updateStatistics() {
-        int[] resultsAsInt = new int[TEST_RESULTS_LIST_DATA.size()];
+        int[] resultsAsInt = new int[resultListData.size()];
         for(int i = 0; i < resultsAsInt.length; ++i) {
-            resultsAsInt[i] = Integer.parseInt(TEST_RESULTS_LIST_DATA.get(i));
+            resultsAsInt[i] = Integer.parseInt(resultListData.get(i));
         }
 
         TextView avgValText = (TextView) findViewById(R.id.results_avg_value);
@@ -98,22 +108,28 @@ public class DisplayResultsActivity extends AppCompatActivity {
         return Math.sqrt((1/(double)resultsAsInt.length) * stdSum);
     }
 
-    private void assignRandomDataToList() {
-        int resultsListSize = TEST_RESULTS_LIST_DATA.size();
-        resultsListAdapter.clear();
-        Random random = new Random();
-
-        for(int i = 0; i < resultsListSize; ++i) {
-            int randomInt = random.nextInt((20 - 1) + 1) + 1;
-            TEST_RESULTS_LIST_DATA.add(String.valueOf(randomInt));
+    private class RateAgainListener implements View.OnClickListener {
+        public void onClick(View v) {
+            ((HostSession) GameSessionHolder.getInstance().getSession()).resetCurrentCard();
+            resultsListAdapter.clear();
+            for(int i = 0;i<nrOfPlayers;i++){
+                resultsListAdapter.add("0");
+            }
+            resetStatistics();
         }
     }
 
-    private class RateAgainListener implements View.OnClickListener {
-        public void onClick(View v) {
-            assignRandomDataToList();
-            updateStatistics();
-        }
+    private void resetStatistics() {
+        TextView avgValText = (TextView) findViewById(R.id.results_avg_value);
+        avgValText.setText(".00");
+
+        TextView stdValText = (TextView) findViewById(R.id.results_std_value);
+        stdValText.setText(".00");
+
+        TextView medianValText = (TextView) findViewById(R.id.results_median_value);
+        medianValText.setText(".00");
+
+        TextView modalValText = (TextView) findViewById(R.id.results_modal_value);
     }
 
     private class NextCardListener implements View.OnClickListener {
