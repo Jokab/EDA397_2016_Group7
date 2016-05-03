@@ -1,5 +1,7 @@
 package Game;
 
+import android.app.Application;
+import android.content.Context;
 import android.os.Parcelable;
 import android.os.Parcel;
 import android.util.Log;
@@ -32,6 +34,7 @@ import TrelloInteraction.VolleyManager;
 import static Game.ServerURL.ARG_CARD_ID;
 import static Game.ServerURL.ARG_MEMBER_ID;
 import static Game.ServerURL.GET_CURRENT_CARD;
+import static Game.ServerURL.RESET_GAME;
 import static Game.ServerURL.SET_CURRENT_CARD;
 import static Game.ServerURL.createURL;
 
@@ -48,6 +51,7 @@ public abstract class GameSession {
 
     public GameSession(String boardId) {
         gameBoard = new Board(boardId);
+
     }
     public GameSession() { }
 
@@ -60,6 +64,7 @@ public abstract class GameSession {
                     public void onResponse(JSONObject response) {
                         try {
                             currentCardId = response.getString("cardId");
+                            BroadCastManager.get().broadCast(BroadCastTypes.CURRENT_CARD_RECEIVED);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -68,6 +73,23 @@ public abstract class GameSession {
                 }, new Response.ErrorListener() {
             public void onErrorResponse(VolleyError error) {
                 Log.i(logTag,"Failed to retrieve current card");
+            }
+
+        });
+        queue.add(startRequest);
+    }
+
+    public void resetGame() {
+        JsonObjectRequest startRequest = new JsonObjectRequest(Request.Method.GET,
+                createURL(RESET_GAME).asString(), null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.i(logTag,"Successfully reset");
+                    }
+                }, new Response.ErrorListener() {
+            public void onErrorResponse(VolleyError error) {
+                Log.i(logTag,"Failed to reset session");
             }
 
         });

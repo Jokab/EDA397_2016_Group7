@@ -1,8 +1,11 @@
 package eda397_group7.chalmers.se.eda397_2016_group7;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +22,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import Game.BroadCastTypes;
 import Game.GameSessionHolder;
 import Game.HostSession;
 
@@ -48,11 +52,9 @@ public class DisplayProjectCardsActivity extends AppCompatActivity {
         myAdapter.setNotifyOnChange(true);
         myList.setAdapter(myAdapter);
 
-        Timer myTimer = new Timer();
-        myTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {UpdateGUI();}
-        }, 0, 1000);
+        BroadcastReceiver receiver = new MyBroadcastReceiver();
+        IntentFilter f1 = new IntentFilter(BroadCastTypes.CURRENT_BOARD_UPDATED);
+        registerReceiver(receiver, f1);
     }
 
     @Override
@@ -70,31 +72,6 @@ public class DisplayProjectCardsActivity extends AppCompatActivity {
                 .create().show();
     }
 
-    final Runnable myRunnable = new Runnable() {
-        public void run() {
-            try {
-                cards = GameSessionHolder.getInstance().getSession().getGameBoard().getCardId();
-
-                myAdapter.clear();
-                myAdapter.addAll(cards);
-                if(!cards.isEmpty()) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            ((ProgressBar) findViewById(R.id.projectcards_progressbar)).setVisibility(ProgressBar.INVISIBLE);
-                        }
-                    });
-                }
-            } catch(NullPointerException e) {
-            }
-        }
-    };
-
-    private void UpdateGUI() {
-        i++;
-        myHandler.post(myRunnable);
-    }
-
     private class MyOnItemClickListener implements AdapterView.OnItemClickListener {
         private final ListView myList;
 
@@ -108,6 +85,22 @@ public class DisplayProjectCardsActivity extends AppCompatActivity {
             ((HostSession) GameSessionHolder.getInstance().getSession()).setCurrentCard(selectedCard[0]);
             startActivity(new Intent(DisplayProjectCardsActivity.this, DisplayResultsActivity.class));
         }
+    }
+
+    private class MyBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+
+            if(action.equals(BroadCastTypes.CURRENT_BOARD_UPDATED)){
+                ((ProgressBar) findViewById(R.id.projectcards_progressbar)).setVisibility(ProgressBar.INVISIBLE);
+                cards = GameSessionHolder.getInstance().getSession().getGameBoard().getCardId();
+                myAdapter.clear();
+                myAdapter.addAll(cards);
+            }
+        }
+
+        ;
     }
 }
 

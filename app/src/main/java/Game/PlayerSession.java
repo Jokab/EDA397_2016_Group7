@@ -16,8 +16,8 @@ import TrelloInteraction.Board;
 
 import static Game.ServerURL.ARG_MEMBER_ID;
 import static Game.ServerURL.ARG_RATING_ID;
+import static Game.ServerURL.RATE_CURRENT_CARD;
 import static Game.ServerURL.REGISTER_MEMBER;
-import static Game.ServerURL.START_SESSION;
 import static Game.ServerURL.createURL;
 
 /**
@@ -36,10 +36,9 @@ public class PlayerSession extends GameSession {
         Map<String, String> jsonParams = new HashMap<String, String>();
         jsonParams.put(ARG_MEMBER_ID,""+memberId);
         jsonParams.put(ARG_RATING_ID, ""+rating);
-
         Log.i(logTag, (new JSONObject((jsonParams)).toString() ));
         CustomJsonObjRequest rateCardRequest = new CustomJsonObjRequest(Request.Method.POST,
-                createURL(START_SESSION).asString(), jsonParams ,
+                createURL(RATE_CURRENT_CARD).asString(), jsonParams ,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -48,6 +47,7 @@ public class PlayerSession extends GameSession {
                 }, new Response.ErrorListener() {
             public void onErrorResponse(VolleyError error) {
                 Log.i(logTag,"Failed to rate card");
+                BroadCastManager.get().broadCast(BroadCastTypes.COULD_NOT_RATE);
             }
         });
         queue.add(rateCardRequest);
@@ -64,6 +64,7 @@ public class PlayerSession extends GameSession {
                     public void onResponse(JSONObject response) {
                         try {
                             memberId = response.getInt(ServerURL.ARG_MEMBER_ID);
+                            BroadCastManager.get().broadCast(BroadCastTypes.REGISTER_SUCCESSFUL);
                             setGameBoard(response.getString(ServerURL.ARG_BOARD_ID));
                             gameBoard.updateCards();
                         } catch (JSONException e) {

@@ -1,20 +1,19 @@
 package eda397_group7.chalmers.se.eda397_2016_group7;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import Game.GameSession;
+import Game.BroadCastTypes;
 import Game.GameSessionHolder;
-import Game.HostSession;
 import Game.PlayerSession;
 import TrelloInteraction.Board;
 
@@ -32,17 +31,13 @@ public class ChooseRoleActivity extends AppCompatActivity {
 
         Button devButton = (Button) findViewById(R.id.DeveloperButton);
 
-        //Attempt to get objects from intent
         Intent i = getIntent();
-       // primaryBoard = i.getParcelableExtra("board");
-       // Log.i(logTag, primaryBoard.getCard("cardName").getName());
 
         devButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 GameSessionHolder.getInstance().setSession(new PlayerSession());
                 ((PlayerSession) GameSessionHolder.getInstance().getSession()).registerToSession();
-                // TODO: DON'T SWITCH TO DisplaycardActivity unless actually registered
-                startActivity(new Intent(ChooseRoleActivity.this, DisplaycardActivity.class));
+
             }
         });
 
@@ -52,6 +47,12 @@ public class ChooseRoleActivity extends AppCompatActivity {
                 startActivity(new Intent(ChooseRoleActivity.this, SelectProjectActivity.class));
             }
         });
+
+
+        BroadcastReceiver receiver = new MyBroadcastReceiver();
+        IntentFilter f1 = new IntentFilter(BroadCastTypes.REGISTER_SUCCESSFUL);
+        registerReceiver(receiver, f1);
+
     }
 
     @Override
@@ -63,11 +64,21 @@ public class ChooseRoleActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.action_refresh) {
-            if(GameSessionHolder.getInstance().getSession().getClass() == HostSession.class) {
-                ((HostSession) GameSessionHolder.getInstance().getSession()).resetGame();
+        //    if(GameSessionHolder.getInstance().getSession().getClass() == HostSession.class) {
+            (GameSessionHolder.getInstance().getSession()).resetGame();
+          //  }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private class MyBroadcastReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if(action.equals(BroadCastTypes.REGISTER_SUCCESSFUL)){
+                startActivity(new Intent(ChooseRoleActivity.this, DisplaycardActivity.class));
             }
         }
-
-        return super.onOptionsItemSelected(item);
     }
 }

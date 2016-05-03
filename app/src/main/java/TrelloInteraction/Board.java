@@ -18,6 +18,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import Game.BroadCastManager;
+import Game.BroadCastTypes;
+
 public class Board {
 
     private String id;
@@ -37,6 +40,7 @@ public class Board {
                     @Override
                     public void onResponse(JSONArray response) {
                         JArrayToCards(response);
+                        BroadCastManager.get().broadCast(BroadCastTypes.CURRENT_BOARD_UPDATED);
                     }
                 }, new Response.ErrorListener() {
             public void onErrorResponse(VolleyError error) {

@@ -28,7 +28,6 @@ public class HostSession extends GameSession {
     public HostSession() { };
     public HostSession(String boardId, int nrOfPlayers) {
         super(boardId);
-        // Race condition, I know. Temporary solution
         startSession(nrOfPlayers);
     }
 
@@ -92,20 +91,4 @@ public class HostSession extends GameSession {
         //Dom req
     }
 
-    public void resetGame() {
-        JsonObjectRequest startRequest = new JsonObjectRequest(Request.Method.GET,
-                createURL(RESET_GAME).asString(), null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.i(logTag,"Successfully reset");
-                    }
-                }, new Response.ErrorListener() {
-            public void onErrorResponse(VolleyError error) {
-                Log.i(logTag,"Failed to reset session");
-            }
-
-        });
-        queue.add(startRequest);
-    }
 }
