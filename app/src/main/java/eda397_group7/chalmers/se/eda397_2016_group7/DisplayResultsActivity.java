@@ -111,8 +111,10 @@ public class DisplayResultsActivity extends AppCompatActivity {
 
     private class RateAgainListener implements View.OnClickListener {
         public void onClick(View v) {
-            assignRandomDataToList();
-            updateStatistics();
+            //assignRandomDataToList();
+            //updateStatistics();
+
+
         }
     }
 

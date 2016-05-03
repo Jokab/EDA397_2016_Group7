@@ -20,7 +20,7 @@ public class ServerURL {
     public static final String CLOSE_CURRENT_CARD = "//closeCard"; //:memberId
     public static final String RESET_GAME = "/resetGame";
     public static final String RESET_CARD = "/resetCard";// memberId
-    public static final String GET_CURRENT_CARD_RATINGS = "/getAllRatingsForCurrentCard"; //:memberId
+    public static final String GET_CURRENT_CARD_RATINGS = "/getRatingsForCurrentCard"; //:memberId
     public static final String GET_ALL_RATINGS = "/getAllRatings"; // :memberid
 
     //Parameters

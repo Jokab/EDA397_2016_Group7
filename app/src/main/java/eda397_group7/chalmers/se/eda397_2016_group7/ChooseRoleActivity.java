@@ -21,6 +21,7 @@ public class ChooseRoleActivity extends AppCompatActivity {
 
     private Board primaryBoard;
     private String logTag = "ChooseRoleActivity LOG";
+    private BroadcastReceiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +51,20 @@ public class ChooseRoleActivity extends AppCompatActivity {
         });
 
 
-        BroadcastReceiver receiver = new MyBroadcastReceiver();
+        receiver = new MyBroadcastReceiver();
         IntentFilter f1 = new IntentFilter(BroadCastTypes.REGISTER_SUCCESSFUL);
         registerReceiver(receiver, f1);
 
+    }
+
+    @Override
+    protected void onStop() {
+        try {
+            unregisterReceiver(receiver);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+        super.onStop();
     }
 
     @Override

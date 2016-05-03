@@ -37,7 +37,7 @@ public class HostSession extends GameSession {
         jsonParams.put(ARG_NR_OF_PLAYERS,""+nrOfPlayers);
         jsonParams.put(ARG_BOARD_ID, gameBoard.getId());
 
-        Log.i(logTag, (new JSONObject((jsonParams)).toString() ));
+        Log.i(logTag, (new JSONObject((jsonParams)).toString()));
         CustomJsonObjRequest startRequest = new CustomJsonObjRequest(Request.Method.POST,
                 createURL(START_SESSION).asString(), jsonParams ,
                 new Response.Listener<JSONObject>() {
@@ -81,7 +81,23 @@ public class HostSession extends GameSession {
     }
 
     public void getCurrentRatings() {
-        // TODO
+        Map<String, String> jsonParams = new HashMap<String, String>();
+        jsonParams.put(ARG_MEMBER_ID, "" + super.memberId);
+        CustomJsonObjRequest startRequest = new CustomJsonObjRequest(Request.Method.GET,
+                createURL(GET_CURRENT_CARD_RATINGS).asString(), jsonParams,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        response.get
+                        Log.i(logTag,"Successfully got current card ratings: " + cardId);
+                    }
+                }, new Response.ErrorListener() {
+            public void onErrorResponse(VolleyError error) {
+                Log.i(logTag,"Failed to set current card to " + cardId);
+            }
+
+        });
+        queue.add(startRequest);
     }
 
     public void getAllCardRatings() {
