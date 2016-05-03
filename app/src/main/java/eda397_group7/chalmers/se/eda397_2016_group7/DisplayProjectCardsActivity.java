@@ -31,6 +31,7 @@ public class DisplayProjectCardsActivity extends AppCompatActivity {
     private final Handler myHandler = new Handler();
     private int i=0;
     final String[] selectedCard = {""};
+    private BroadcastReceiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +50,20 @@ public class DisplayProjectCardsActivity extends AppCompatActivity {
         myAdapter.setNotifyOnChange(true);
         myList.setAdapter(myAdapter);
 
-        BroadcastReceiver receiver = new MyBroadcastReceiver();
+        receiver = new MyBroadcastReceiver();
         IntentFilter f1 = new IntentFilter(BroadCastTypes.CURRENT_BOARD_UPDATED);
         registerReceiver(receiver, f1);
+    }
+
+    @Override
+    protected void onStop() {
+        try {
+            unregisterReceiver(receiver);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+
+        super.onStop();
     }
 
     @Override

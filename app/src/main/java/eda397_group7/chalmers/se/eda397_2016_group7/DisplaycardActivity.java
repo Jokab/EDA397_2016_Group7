@@ -24,6 +24,7 @@ public class DisplaycardActivity extends AppCompatActivity {
     private int rateResult = 0;
     private TextView ratingResultView;
     private TextView currentCard;
+    private BroadcastReceiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +42,19 @@ public class DisplaycardActivity extends AppCompatActivity {
         Button submitButton = (Button) findViewById(R.id.submitRateButton);
         submitButton.setOnClickListener(new SubmitListener());
 
-        BroadcastReceiver receiver = new MyBroadcastReceiver();
+        receiver = new MyBroadcastReceiver();
         IntentFilter f1 = new IntentFilter(BroadCastTypes.CURRENT_CARD_RECEIVED);
         registerReceiver(receiver, f1);
+    }
 
-
+    @Override
+    protected void onStop() {
+        try {
+            unregisterReceiver(receiver);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+        super.onStop();
     }
 
     private class RateListener implements TextWatcher {
