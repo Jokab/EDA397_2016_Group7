@@ -1,7 +1,7 @@
-package game;
+package Game;
 
 
-import trelloInteraction.Argument;
+import TrelloInteraction.Argument;
 
 
 /**

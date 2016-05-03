@@ -1,4 +1,4 @@
-package game;
+package Game;
 
 
 import android.util.Log;
@@ -15,7 +15,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import static game.ServerURL.*;
+import static Game.ServerURL.*;
 
 /**
  * A host specific game session

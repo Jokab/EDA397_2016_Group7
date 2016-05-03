@@ -1,7 +1,4 @@
-package trelloInteraction;
-
-import android.os.Parcel;
-import android.os.Parcelable;
+package TrelloInteraction;
 
 /**
  * A Trello card

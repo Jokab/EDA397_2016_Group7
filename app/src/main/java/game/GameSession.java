@@ -1,4 +1,4 @@
-package game;
+package Game;
 
 import android.util.Log;
 
@@ -10,11 +10,11 @@ import com.android.volley.VolleyError;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import trelloInteraction.Board;
-import trelloInteraction.VolleyManager;
+import TrelloInteraction.Board;
+import TrelloInteraction.VolleyManager;
 
-import static game.ServerURL.GET_CURRENT_CARD;
-import static game.ServerURL.createURL;
+import static Game.ServerURL.GET_CURRENT_CARD;
+import static Game.ServerURL.createURL;
 
 /**
  * A game session.

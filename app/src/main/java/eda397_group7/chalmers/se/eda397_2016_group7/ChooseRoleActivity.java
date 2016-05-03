@@ -9,10 +9,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import game.GameSessionHolder;
-import game.HostSession;
-import game.PlayerSession;
-import trelloInteraction.Board;
+import Game.GameSessionHolder;
+import Game.HostSession;
+import Game.PlayerSession;
+import TrelloInteraction.Board;
 
 public class ChooseRoleActivity extends AppCompatActivity {
 

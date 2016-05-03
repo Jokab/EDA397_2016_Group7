@@ -12,7 +12,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import trelloInteraction.Board;
+import TrelloInteraction.Board;
 
 import static game.ServerURL.ARG_MEMBER_ID;
 import static game.ServerURL.ARG_RATING_ID;

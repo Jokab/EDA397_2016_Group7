@@ -1,4 +1,4 @@
-package trelloInteraction;
+package TrelloInteraction;
 
 import android.content.Context;
 

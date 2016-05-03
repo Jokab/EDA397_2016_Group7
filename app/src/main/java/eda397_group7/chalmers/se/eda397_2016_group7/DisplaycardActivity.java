@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import game.GameSessionHolder;
+import Game.GameSessionHolder;
 
 public class DisplaycardActivity extends AppCompatActivity {
 

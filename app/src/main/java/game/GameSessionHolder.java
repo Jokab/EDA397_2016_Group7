@@ -1,4 +1,4 @@
-package game;
+package Game;
 
 /**
  * Singleton used to persist GameSessions when switching activities
