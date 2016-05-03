@@ -1,17 +1,13 @@
-package TrelloInteraction;
-
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.util.Log;
+package trelloInteraction;
 
 /**
  * A Trello card
  */
 public class Card {
 
-    private String id;
-    private String name;
-    private String desc;
+    private final String id;
+    private final String name;
+    private final String desc;
     private int rating;
     private String logTag = "Card LOG";
 

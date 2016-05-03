@@ -12,10 +12,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import Game.BroadCastTypes;
-import Game.GameSessionHolder;
-import Game.PlayerSession;
-import TrelloInteraction.Board;
+import game.BroadCastTypes;
+import game.GameSessionHolder;
+import game.PlayerSession;
+import trelloInteraction.Board;
 
 public class ChooseRoleActivity extends AppCompatActivity {
 
@@ -30,6 +30,7 @@ public class ChooseRoleActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Button devButton = (Button) findViewById(R.id.DeveloperButton);
+
 
         Intent i = getIntent();
 

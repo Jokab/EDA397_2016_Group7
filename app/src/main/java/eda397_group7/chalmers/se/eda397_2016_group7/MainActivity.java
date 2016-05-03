@@ -18,18 +18,15 @@ import com.android.volley.RequestQueue;
 
 import org.json.JSONObject;
 
-import Game.GameSession;
-import Game.GameSessionHolder;
-import Game.HostSession;
-import TrelloInteraction.Board;
-import TrelloInteraction.Card;
-import TrelloInteraction.TrelloAuthenticationConstants;
-import TrelloInteraction.TrelloManagerS;
-import TrelloInteraction.VolleyManager;
+import game.GameSessionHolder;
+import game.HostSession;
+import trelloInteraction.Board;
+import trelloInteraction.TrelloAuthenticationConstants;
+import trelloInteraction.TrelloManagerS;
+import trelloInteraction.VolleyManager;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RequestQueue queue;
     private HostSession host;
     private SharedPreferences sharedPreferences;
 
@@ -72,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //Need to set this up ONCE.
-        queue = VolleyManager.getInstance(this.getApplicationContext()).getRequestQueue();
+        RequestQueue queue = VolleyManager.getInstance(this.getApplicationContext()).getRequestQueue();
         TrelloManagerS.INSTANCE.init(TrelloAuthenticationConstants.appKey, "babblish");
         GameSessionHolder.getInstance().setSession(new HostSession() {
         });
@@ -125,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean checkOAuthReturn(Intent intent) {
         boolean returnFromAuth = false;
         Uri uri = intent.getData();
-        String code = "";
+        String code;
 
         if (uri != null && uri.toString().startsWith("ase://oauthresponse")) {
             String[] uriParts = uri.toString().split("#token=");

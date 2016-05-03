@@ -17,9 +17,8 @@ import java.util.Random;
 
 public class DisplayResultsActivity extends AppCompatActivity {
 
-    public static List<String> TEST_RESULTS_LIST_DATA = new ArrayList<>(Arrays.asList(new String[]{"5", "3", "7", "1", "3", "6", "5", "5", "5","5","5","5","5","5","5","5","5"}));
+    public static final List<String> TEST_RESULTS_LIST_DATA = new ArrayList<>(Arrays.asList(new String[]{"5", "3", "7", "1", "3", "6", "5", "5", "5","5","5","5","5","5","5","5","5"}));
     private ArrayAdapter<String> resultsListAdapter;
-    private ListView resultsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +31,7 @@ public class DisplayResultsActivity extends AppCompatActivity {
                 this,
                 android.R.layout.simple_list_item_activated_1,
                 TEST_RESULTS_LIST_DATA);
-        resultsList = (ListView) findViewById(R.id.rating_listview);
+        ListView resultsList = (ListView) findViewById(R.id.rating_listview);
         resultsListAdapter.setNotifyOnChange(true);
         resultsList.setAdapter(resultsListAdapter);
 
@@ -68,8 +67,8 @@ public class DisplayResultsActivity extends AppCompatActivity {
 
     private double computeAverage(int[] resultsAsInt) {
         int sum = 0;
-        for(int i = 0; i < resultsAsInt.length; ++i) {
-            sum += resultsAsInt[i];
+        for (int aResultsAsInt : resultsAsInt) {
+            sum += aResultsAsInt;
         }
         return (double) (sum / resultsAsInt.length);
     }
@@ -93,8 +92,8 @@ public class DisplayResultsActivity extends AppCompatActivity {
 
     private double computeStd(int[] resultsAsInt, double avgVal) {
         double stdSum = 0;
-        for(int i = 0; i < resultsAsInt.length; ++i) {
-            stdSum += Math.pow((resultsAsInt[i] - avgVal), 2);
+        for (int aResultsAsInt : resultsAsInt) {
+            stdSum += Math.pow((aResultsAsInt - avgVal), 2);
         }
         return Math.sqrt((1/(double)resultsAsInt.length) * stdSum);
     }

@@ -15,9 +15,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import Game.BroadCastTypes;
-import Game.GameSessionHolder;
-import Game.PlayerSession;
+import game.BroadCastTypes;
+import game.GameSessionHolder;
+import game.PlayerSession;
 
 public class DisplaycardActivity extends AppCompatActivity {
 

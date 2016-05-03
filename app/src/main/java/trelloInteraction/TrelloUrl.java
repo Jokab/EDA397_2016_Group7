@@ -1,9 +1,5 @@
-package TrelloInteraction;
+package trelloInteraction;
 
-
-import android.util.Log;
-
-import java.util.regex.Matcher;
 
 /**
  * Helper class to construct requests to Trello
@@ -24,7 +20,7 @@ public class TrelloUrl {
     public static final String GET_CARD = "/cards/{cardId}?";
 
 
-    private String baseURL;
+    private final String baseURL;
     private Argument[] args = {};
 
     private TrelloUrl (String baseURL) {

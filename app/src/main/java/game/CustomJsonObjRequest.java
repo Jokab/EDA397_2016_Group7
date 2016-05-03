@@ -1,4 +1,4 @@
-package Game;
+package game;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
@@ -18,8 +18,8 @@ import java.util.Map;
  */
 public class CustomJsonObjRequest extends Request<JSONObject> {
 
-    private Listener<JSONObject> listener;
-    private Map<String, String> params;
+    private final Listener<JSONObject> listener;
+    private final Map<String, String> params;
 
     public CustomJsonObjRequest(String url, Map<String, String> params,
                          Listener<JSONObject> reponseListener, ErrorListener errorListener) {
@@ -39,8 +39,6 @@ public class CustomJsonObjRequest extends Request<JSONObject> {
             throws com.android.volley.AuthFailureError {
         return params;
     }
-
-    ;
 
     @Override
     protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
