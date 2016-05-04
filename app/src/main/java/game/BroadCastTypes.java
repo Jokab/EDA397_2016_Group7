@@ -12,4 +12,6 @@ public class  BroadCastTypes {
     public static final String CURRENT_BOARD_UPDATED = "currentBoardUpdated";
 
     public static final String REGISTER_SUCCESSFUL = "couldNotRegister";
+
+    public static final String CARD_RATINGS_RECEIVED = "cardRatingsReceived";
 }

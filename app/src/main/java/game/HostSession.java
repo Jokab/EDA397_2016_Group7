@@ -1,17 +1,22 @@
 package game;
 
 
+import android.net.Uri;
 import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static game.ServerURL.*;
@@ -20,6 +25,8 @@ import static game.ServerURL.*;
  * A host specific game session
  */
 public class HostSession extends GameSession {
+
+    private List<String> ratings;
 
     public HostSession() { }
 
@@ -64,7 +71,7 @@ public class HostSession extends GameSession {
         Map<String, String> jsonParams = new HashMap<String, String>();
         jsonParams.put(ARG_CARD_ID, cardId);
         jsonParams.put(ARG_MEMBER_ID, "" + memberId);
-        CustomJsonObjRequest startRequest = new CustomJsonObjRequest(Request.Method.POST,
+        CustomJsonObjRequest setCurrentCardRequest = new CustomJsonObjRequest(Request.Method.POST,
                 createURL(SET_CURRENT_CARD).asString(), jsonParams,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -77,31 +84,50 @@ public class HostSession extends GameSession {
             }
 
         });
-        queue.add(startRequest);
+        queue.add(setCurrentCardRequest);
     }
 
     public void getCurrentRatings() {
+        Log.i(logTag, "Entering method to get ratings.");
+        ratings = new ArrayList<>();
         Map<String, String> jsonParams = new HashMap<String, String>();
+        //Uri.Builder
         jsonParams.put(ARG_MEMBER_ID, "" + super.memberId);
-        CustomJsonObjRequest startRequest = new CustomJsonObjRequest(Request.Method.GET,
-                createURL(GET_CURRENT_CARD_RATINGS).asString(), jsonParams,
+        CustomJsonObjRequest getCurrentRatingsRequest = new CustomJsonObjRequest(Request.Method.GET,
+                createURL(GET_CURRENT_CARD_RATINGS + "/" + memberId).asString(), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        response.get
-                        Log.i(logTag,"Successfully got current card ratings: " + cardId);
+                        Log.i(logTag, "GOt ratings response.");
+                        try {
+                            JSONArray jsonArray = response.getJSONArray(ARG_RATING_VOTINGS);
+                            for(int i = 0; i < jsonArray.length(); ++i) {
+                                JSONObject votingInstance = jsonArray.getJSONObject(i);
+                                int voteByMember = votingInstance.getInt(ARG_RATING_VOTE_BY_MEMBER);
+                                ratings.add(String.valueOf(voteByMember));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        BroadCastManager.get().broadCast(BroadCastTypes.CARD_RATINGS_RECEIVED);
+                        Log.i(logTag,"Successfully got current card ratings: " + ratings);
                     }
                 }, new Response.ErrorListener() {
             public void onErrorResponse(VolleyError error) {
-                Log.i(logTag,"Failed to set current card to " + cardId);
+                Log.i(logTag,"Failed to get current card ratings.");
             }
 
         });
-        queue.add(startRequest);
+        Log.i(logTag, getCurrentRatingsRequest.getUrl());
+        queue.add(getCurrentRatingsRequest);
     }
 
     public void getAllCardRatings() {
         //Dom req TODO
+    }
+
+    public List<String> getCurrentRatingsList() {
+        return this.ratings;
     }
 
 }

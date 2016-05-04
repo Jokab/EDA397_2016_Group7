@@ -1,8 +1,13 @@
 package eda397_group7.chalmers.se.eda397_2016_group7;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -15,10 +20,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import game.BroadCastTypes;
+import game.GameSession;
+import game.GameSessionHolder;
+import game.HostSession;
+
 public class DisplayResultsActivity extends AppCompatActivity {
 
     public static final List<String> TEST_RESULTS_LIST_DATA = new ArrayList<>(Arrays.asList(new String[]{"5", "3", "7", "1", "3", "6", "5", "5", "5","5","5","5","5","5","5","5","5"}));
     private ArrayAdapter<String> resultsListAdapter;
+    private Receiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +52,16 @@ public class DisplayResultsActivity extends AppCompatActivity {
         rateAgain.setOnClickListener(new RateAgainListener());
 
         updateStatistics();
+
+        receiver = new Receiver();
+        IntentFilter filter = new IntentFilter(BroadCastTypes.CARD_RATINGS_RECEIVED);
+        registerReceiver(receiver, filter);
     }
 
     private void updateStatistics() {
-        int[] resultsAsInt = new int[TEST_RESULTS_LIST_DATA.size()];
+        int[] resultsAsInt = new int[resultsListAdapter.getCount()];
         for(int i = 0; i < resultsAsInt.length; ++i) {
-            resultsAsInt[i] = Integer.parseInt(TEST_RESULTS_LIST_DATA.get(i));
+            resultsAsInt[i] = Integer.parseInt(resultsListAdapter.getItem(i));
         }
 
         TextView avgValText = (TextView) findViewById(R.id.results_avg_value);
@@ -111,10 +126,17 @@ public class DisplayResultsActivity extends AppCompatActivity {
 
     private class RateAgainListener implements View.OnClickListener {
         public void onClick(View v) {
+            ((HostSession) GameSessionHolder.getInstance().getSession()).getCurrentRatings();
+
             //assignRandomDataToList();
             //updateStatistics();
 
-
+//            List<Integer> currentRatings = ((HostSession) GameSessionHolder.getInstance().getSession()).getCurrentRatings();
+//            if(!currentRatings.isEmpty()) {
+//                resultsListAdapter.clear();
+//                resultsListAdapter.addAll(currentRatings);
+//
+//            }
         }
     }
 
@@ -122,6 +144,24 @@ public class DisplayResultsActivity extends AppCompatActivity {
         public void onClick(View v) {
             // Finish destroys this activity and returns to the previous one
             finish();
+        }
+    }
+
+    private class Receiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            Log.i(DisplayResultsActivity.class.getSimpleName(), "Received ratings");
+
+            if(action.equals(BroadCastTypes.CARD_RATINGS_RECEIVED)) {
+                List<String> currentRatings = ((HostSession) GameSessionHolder.getInstance().getSession()).getCurrentRatingsList();
+                if(!currentRatings.isEmpty()) {
+                    resultsListAdapter.clear();
+                    resultsListAdapter.addAll(currentRatings);
+                    updateStatistics();
+                }
+            }
         }
     }
 }

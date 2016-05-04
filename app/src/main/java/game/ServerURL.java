@@ -30,6 +30,9 @@ public class ServerURL {
     public static final String ARG_CARD_ID = "cardId";
     public static final String ARG_RATING_ID = "rating";
 
+    public static final String ARG_RATING_VOTINGS = "votings";
+    public static final String ARG_RATING_VOTE_BY_MEMBER = "voting";
+
     private final String baseURL;
     private Argument[] args = {};
 
