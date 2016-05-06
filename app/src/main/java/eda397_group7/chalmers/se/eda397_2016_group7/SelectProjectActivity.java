@@ -102,7 +102,11 @@ public class SelectProjectActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                players[0] = Integer.parseInt(numberOfPlayersField.getText().toString());
+                if (numberOfPlayersField.getText().toString().equals("")) {
+                    players[0] = 0;
+                } else {
+                    players[0] = Integer.parseInt(numberOfPlayersField.getText().toString());
+                }
             }
         });
     }

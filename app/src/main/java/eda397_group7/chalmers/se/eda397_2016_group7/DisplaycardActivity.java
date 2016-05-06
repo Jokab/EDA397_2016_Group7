@@ -68,7 +68,11 @@ public class DisplaycardActivity extends AppCompatActivity {
 
         @Override
         public void afterTextChanged(Editable s) {
-            rateResult = Integer.parseInt(ratingResultView.getText().toString());
+            if(ratingResultView.getText().toString().equals("")){
+                rateResult = 0;
+            } else {
+                rateResult = Integer.parseInt(ratingResultView.getText().toString());
+            }
         }
     }
 
