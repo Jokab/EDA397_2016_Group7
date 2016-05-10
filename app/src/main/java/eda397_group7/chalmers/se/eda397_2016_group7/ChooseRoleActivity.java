@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -61,13 +62,13 @@ public class ChooseRoleActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
+    protected void onDestroy() {
         try {
             unregisterReceiver(receiver);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
-        super.onStop();
+        super.onDestroy();
     }
 
     @Override
@@ -89,6 +90,7 @@ public class ChooseRoleActivity extends AppCompatActivity {
     private class MyBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
+            Log.i("ChooseRoleActivity", "Received action");
             String action = intent.getAction();
             if (action.equals(BroadCastTypes.REGISTER_SUCCESSFUL)) {
                 startActivity(new Intent(ChooseRoleActivity.this, DisplaycardActivity.class));

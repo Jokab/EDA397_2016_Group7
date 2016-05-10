@@ -57,14 +57,14 @@ public class DisplayProjectCardsActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
+    protected void onDestroy() {
         try {
             unregisterReceiver(receiver);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
 
-        super.onStop();
+        super.onDestroy();
     }
 
     @Override

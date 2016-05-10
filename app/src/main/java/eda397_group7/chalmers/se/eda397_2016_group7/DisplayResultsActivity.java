@@ -158,6 +158,17 @@ public class DisplayResultsActivity extends AppCompatActivity {
         TextView modalValText = (TextView) findViewById(R.id.results_modal_value);
     }
 
+    @Override
+    protected void onDestroy() {
+        try {
+            unregisterReceiver(receiver);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+
+        super.onDestroy();
+    }
+
     private class NextCardListener implements View.OnClickListener {
         public void onClick(View v) {
             // Finish destroys this activity and returns to the previous one
