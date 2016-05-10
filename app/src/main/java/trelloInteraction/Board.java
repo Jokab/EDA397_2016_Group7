@@ -70,6 +70,14 @@ public class Board {
         return(new ArrayList<>(id));
     }
 
+    public List<String> getCardNames() {
+        ArrayList<String> cardNames = new ArrayList<>();
+        for(Card card : cards.values()){
+            cardNames.add(card.getName());
+        }
+        return cardNames;
+    }
+
     public Card getCard(String id){
         try{
             return(cards.get(id));
