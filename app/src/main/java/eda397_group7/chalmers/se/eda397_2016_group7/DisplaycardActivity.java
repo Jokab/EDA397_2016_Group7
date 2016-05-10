@@ -48,6 +48,12 @@ public class DisplaycardActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        GameSessionHolder.getInstance().getSession().getCurrentCard();
+    }
+
+    @Override
     protected void onStop() {
         try {
             unregisterReceiver(receiver);

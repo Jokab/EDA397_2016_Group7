@@ -111,7 +111,6 @@ public class HostSession extends GameSession {
     }
 
     public void getCurrentRatings() {
-        Log.i(logTag, "Entering method to get ratings.");
         ratings = new ArrayList<>();
         Map<String, String> jsonParams = new HashMap<String, String>();
         //Uri.Builder
@@ -121,7 +120,6 @@ public class HostSession extends GameSession {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.i(logTag, "GOt ratings response.");
                         try {
                             JSONArray jsonArray = response.getJSONArray(ARG_RATING_VOTINGS);
                             for(int i = 0; i < jsonArray.length(); ++i) {
@@ -141,7 +139,6 @@ public class HostSession extends GameSession {
             }
 
         });
-        Log.i(logTag, getCurrentRatingsRequest.getUrl());
         queue.add(getCurrentRatingsRequest);
     }
 
