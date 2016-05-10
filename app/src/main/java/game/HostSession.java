@@ -27,12 +27,18 @@ import static game.ServerURL.*;
 public class HostSession extends GameSession {
 
     private List<String> ratings;
+    private int nrOfPlayers;
 
     public HostSession() { }
 
     public HostSession(String boardId, int nrOfPlayers) {
         super(boardId);
+        this.nrOfPlayers = nrOfPlayers;
         startSession(nrOfPlayers);
+    }
+
+    public int getNrOfPlayers() {
+        return nrOfPlayers;
     }
 
     /**
@@ -85,6 +91,23 @@ public class HostSession extends GameSession {
 
         });
         queue.add(setCurrentCardRequest);
+    }
+
+    public void resetCurrentCard() {
+        CustomJsonObjRequest startRequest = new CustomJsonObjRequest(Request.Method.GET,
+                createURL(RESET_CARD+"/"+this.memberId).asString(), null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.i(logTag,"Successfully reset ratings for current card: ");
+                    }
+                }, new Response.ErrorListener() {
+            public void onErrorResponse(VolleyError error) {
+                Log.i(logTag,"Failed to reset ratings for current card");
+            }
+
+        });
+        queue.add(startRequest);
     }
 
     public void getCurrentRatings() {

@@ -1,9 +1,12 @@
 package eda397_group7.chalmers.se.eda397_2016_group7;
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -75,22 +78,27 @@ public class ChooseRoleActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.action_refresh) {
-        //    if(GameSessionHolder.getInstance().getSession().getClass() == HostSession.class) {
+        if (item.getItemId() == R.id.action_refresh) {
+            //    if(GameSessionHolder.getInstance().getSession().getClass() == HostSession.class) {
             (GameSessionHolder.getInstance().getSession()).resetGame();
-          //  }
+            //  }
         }
         return super.onOptionsItemSelected(item);
     }
 
     private class MyBroadcastReceiver extends BroadcastReceiver {
-
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if(action.equals(BroadCastTypes.REGISTER_SUCCESSFUL)){
+            if (action.equals(BroadCastTypes.REGISTER_SUCCESSFUL)) {
                 startActivity(new Intent(ChooseRoleActivity.this, DisplaycardActivity.class));
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        unregisterReceiver(receiver);
+        super.onBackPressed();
     }
 }

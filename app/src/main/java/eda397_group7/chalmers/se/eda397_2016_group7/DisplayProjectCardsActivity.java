@@ -27,6 +27,7 @@ public class DisplayProjectCardsActivity extends AppCompatActivity {
 
     public static final String[] TEST_CARDS_LIST_DATA = new String[]{"Card A", "Card B", "Card C"};
     private List<String> cards = new ArrayList<>();
+    private List<String> names = new ArrayList<>();
     private ArrayAdapter<String> myAdapter;
     private final Handler myHandler = new Handler();
     private int i=0;
@@ -91,7 +92,7 @@ public class DisplayProjectCardsActivity extends AppCompatActivity {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            selectedCard[0] = (String) myList.getItemAtPosition(position);
+            selectedCard[0] = (String) cards.get(position);
             ((HostSession) GameSessionHolder.getInstance().getSession()).setCurrentCard(selectedCard[0]);
             startActivity(new Intent(DisplayProjectCardsActivity.this, DisplayResultsActivity.class));
         }
@@ -105,8 +106,9 @@ public class DisplayProjectCardsActivity extends AppCompatActivity {
             if(action.equals(BroadCastTypes.CURRENT_BOARD_UPDATED)){
                 ((ProgressBar) findViewById(R.id.projectcards_progressbar)).setVisibility(ProgressBar.INVISIBLE);
                 cards = GameSessionHolder.getInstance().getSession().getGameBoard().getCardId();
+                names = GameSessionHolder.getInstance().getSession().getGameBoard().getCardNames();
                 myAdapter.clear();
-                myAdapter.addAll(cards);
+                myAdapter.addAll(names);
             }
         }
     }

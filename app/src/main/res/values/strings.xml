@@ -31,4 +31,8 @@
     <string name="results_modal_value">Modalval</string>
     <string name="results_rating_label">Card rating</string>
     <string name="refresh_default">Refresh</string>
+    <string name="exit_app">Do you really want to close the application?</string>
+    <string name="planning_poker">Planning-Poker</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
 </resources>

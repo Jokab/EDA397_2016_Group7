@@ -17,7 +17,7 @@ public class ServerURL {
     public static final String SET_CURRENT_CARD = "/selectNewCard"; // cardId, :memberId
     public static final String GET_CURRENT_CARD = "/getCurrentCard";
     public static final String RATE_CURRENT_CARD = "/rateCurrentCard"; //:memberId, Rating
-    public static final String CLOSE_CURRENT_CARD = "//closeCard"; //:memberId
+    public static final String CLOSE_CURRENT_CARD = "/closeCard"; //:memberId
     public static final String RESET_GAME = "/resetGame";
     public static final String RESET_CARD = "/resetCard";// memberId
     public static final String GET_CURRENT_CARD_RATINGS = "/getRatingsForCurrentCard"; //:memberId

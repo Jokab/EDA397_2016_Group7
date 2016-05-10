@@ -48,7 +48,9 @@ public abstract class GameSession {
         gameBoard = new Board(boardId);
 
     }
-    public GameSession() { }
+
+    public GameSession() {
+    }
 
     public void getCurrentCard() {
         CustomJsonObjRequest startRequest = new CustomJsonObjRequest(Request.Method.GET,
@@ -62,11 +64,11 @@ public abstract class GameSession {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        Log.i(logTag,"Successfully retrieved current card: " + currentCardId);
+                        Log.i(logTag, "Successfully retrieved current card: " + currentCardId);
                     }
                 }, new Response.ErrorListener() {
             public void onErrorResponse(VolleyError error) {
-                Log.i(logTag,"Failed to retrieve current card");
+                Log.i(logTag, "Failed to retrieve current card");
             }
 
         });
@@ -79,11 +81,11 @@ public abstract class GameSession {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.i(logTag,"Successfully reset");
+                        Log.i(logTag, "Successfully reset");
                     }
                 }, new Response.ErrorListener() {
             public void onErrorResponse(VolleyError error) {
-                Log.i(logTag,"Failed to reset session");
+                Log.i(logTag, "Failed to reset session");
             }
 
         });
@@ -91,8 +93,7 @@ public abstract class GameSession {
     }
 
     /**
-     *
-      * @return id of current card.
+     * @return id of current card.
      */
 
     public String getCurrentCardId() {
@@ -100,7 +101,6 @@ public abstract class GameSession {
     }
 
     /**
-     *
      * @return the gameboard
      */
     public Board getGameBoard() {

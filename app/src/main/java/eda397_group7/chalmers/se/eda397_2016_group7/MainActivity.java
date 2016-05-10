@@ -42,35 +42,20 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Button LogButton = (Button) findViewById(R.id.LoginButton);
-        LogButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, ChooseRoleActivity.class);
-
-                //add testcard to board
-               // primaryBoard.addCard(new Card("cardId", "cardName", "cardDesc"));
-                //get card
-                //Card cardz = primaryBoard.getCard("cardName");
-                //Log.i(logTag, cardz.getName());
-
-               // i.putExtra("board", primaryBoard);
-
-                startActivity(i);
-            }
-        });
-
-
         Button trelloLoginButton = (Button) findViewById(R.id.trello_login);
         sharedPreferences = this.getSharedPreferences(
                 "authorizeprefs", Context.MODE_PRIVATE);
         String authtoken = sharedPreferences.getString("authtoken", "empty");
         if (!authtoken.equals("empty")) {
-            Toast.makeText(this, "already authorized", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(MainActivity.this, ChooseRoleActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
         }
 
         //Need to set this up ONCE.
         RequestQueue queue = VolleyManager.getInstance(this.getApplicationContext()).getRequestQueue();
-        TrelloManagerS.INSTANCE.init(TrelloAuthenticationConstants.appKey, "babblish");
+        TrelloManagerS.INSTANCE.init(TrelloAuthenticationConstants.appKey, authtoken);
         GameSessionHolder.getInstance().setSession(new HostSession() {
         });
 
@@ -132,8 +117,12 @@ public class MainActivity extends AppCompatActivity {
                 code = uriParts[1];
                 sharedPreferences.edit().putString("authtoken", code).apply();
                 returnFromAuth = true;
+                TrelloManagerS.INSTANCE.setAuthToken(code);
             }
-            Toast.makeText(this, "Login successful.", Toast.LENGTH_LONG).show();
+            Intent i = new Intent(MainActivity.this, ChooseRoleActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(i);
+            finish();
         }
         return returnFromAuth;
     }
