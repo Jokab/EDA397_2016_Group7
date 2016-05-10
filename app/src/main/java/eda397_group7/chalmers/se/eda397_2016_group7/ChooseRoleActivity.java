@@ -1,5 +1,6 @@
 package eda397_group7.chalmers.se.eda397_2016_group7;
 
+import android.app.ProgressDialog;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -8,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -15,16 +17,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import game.BroadCastTypes;
 import game.GameSessionHolder;
 import game.PlayerSession;
-import trelloInteraction.Board;
 
 public class ChooseRoleActivity extends AppCompatActivity {
 
-    private Board primaryBoard;
     private String logTag = "ChooseRoleActivity LOG";
+    private ProgressDialog registerProgress;
+    private Runnable registerProgressRunnable;
+    private Handler myHandler;
     private BroadcastReceiver receiver;
 
     @Override
@@ -36,16 +40,29 @@ public class ChooseRoleActivity extends AppCompatActivity {
 
         Button devButton = (Button) findViewById(R.id.DeveloperButton);
 
-
+        registerProgress = new ProgressDialog(this);
+        registerProgress.setTitle("Registering");
+        registerProgress.setMessage("Please wait while trying to register...");
+        myHandler = new Handler();
         Intent i = getIntent();
 
         devButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 GameSessionHolder.getInstance().setSession(new PlayerSession());
+                registerProgress.show();
+                myHandler.postDelayed(registerProgressRunnable, 3000);
                 ((PlayerSession) GameSessionHolder.getInstance().getSession()).registerToSession();
-
             }
         });
+        registerProgressRunnable = new Runnable() {
+            @Override
+            public void run() {
+                registerProgress.dismiss();
+                Toast.makeText(getApplicationContext(),
+                        "Could not register", Toast.LENGTH_SHORT).show();
+
+            }
+        };
 
         Button modButton = (Button) findViewById(R.id.ModeratorButton);
         modButton.setOnClickListener(new View.OnClickListener() {
@@ -80,9 +97,7 @@ public class ChooseRoleActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_refresh) {
-            //    if(GameSessionHolder.getInstance().getSession().getClass() == HostSession.class) {
             (GameSessionHolder.getInstance().getSession()).resetGame();
-            //  }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -90,17 +105,14 @@ public class ChooseRoleActivity extends AppCompatActivity {
     private class MyBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.i("ChooseRoleActivity", "Received action");
             String action = intent.getAction();
             if (action.equals(BroadCastTypes.REGISTER_SUCCESSFUL)) {
-                startActivity(new Intent(ChooseRoleActivity.this, DisplaycardActivity.class));
+                registerProgress.dismiss();
+                myHandler.removeCallbacks(registerProgressRunnable);
+                if (action.equals(BroadCastTypes.REGISTER_SUCCESSFUL)) {
+                    startActivity(new Intent(ChooseRoleActivity.this, DisplaycardActivity.class));
+                }
             }
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        unregisterReceiver(receiver);
-        super.onBackPressed();
     }
 }

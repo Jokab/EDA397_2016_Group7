@@ -68,10 +68,10 @@ public class PlayerSession extends GameSession {
                             BroadCastManager.get().broadCast(BroadCastTypes.REGISTER_SUCCESSFUL);
                             setGameBoard(response.getString(ServerURL.ARG_BOARD_ID));
                             gameBoard.updateCards();
+                            Log.i(logTag, "Registered to session");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        Log.i(logTag, "Registered to session");
                     }
                 }, new Response.ErrorListener() {
             public void onErrorResponse(VolleyError error) {
