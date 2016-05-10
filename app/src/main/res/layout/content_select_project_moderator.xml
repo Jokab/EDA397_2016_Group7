@@ -58,12 +58,4 @@
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="44dp" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="DebugProject"
-        android:id="@+id/select_project_debugbutton"
-        android:layout_above="@+id/startGameButton"
-        android:layout_alignEnd="@+id/startGameButton"
-        android:layout_marginBottom="52dp" />
 </RelativeLayout>

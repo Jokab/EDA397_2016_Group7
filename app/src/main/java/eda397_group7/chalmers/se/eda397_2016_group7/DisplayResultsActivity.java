@@ -11,25 +11,30 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import game.GameSession;
 import game.GameSessionHolder;
 import game.HostSession;
+import trelloInteraction.Card;
 
 import game.BroadCastTypes;
 
 public class DisplayResultsActivity extends AppCompatActivity {
 
-    public static final List<String> resultListData = new ArrayList<>();
+    public static final List<String> resultListData = new ArrayList<>(Arrays.asList(new String[]{"5", "3", "7", "1", "3", "6", "5", "5", "5","5","5","5","5","5","5","5","5"}));
     private ArrayAdapter<String> resultsListAdapter;
-    private Receiver receiver;
     private int nrOfPlayers;
+    private EditText cardRating;
+    private BroadcastReceiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +43,11 @@ public class DisplayResultsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        nrOfPlayers = ((HostSession)GameSessionHolder.getInstance().getSession()).getNrOfPlayers();
+        nrOfPlayers = ((HostSession) GameSessionHolder.getInstance().getSession()).getNrOfPlayers();
+        cardRating = (EditText) findViewById(R.id.cardRating);
 
         resultListData.clear();
-        for(int i = 0; i < nrOfPlayers;i++){
+        for (int i = 0; i < nrOfPlayers; i++) {
             resultListData.add("0");
         }
 
@@ -68,9 +74,9 @@ public class DisplayResultsActivity extends AppCompatActivity {
     }
 
     private void updateStatistics() {
-        int[] resultsAsInt = new int[resultsListAdapter.getCount()];
+        int[] resultsAsInt = new int[resultListData.size()];
         for(int i = 0; i < resultsAsInt.length; ++i) {
-            resultsAsInt[i] = Integer.parseInt(resultsListAdapter.getItem(i));
+            resultsAsInt[i] = Integer.parseInt(resultListData.get(i));
         }
 
         TextView avgValText = (TextView) findViewById(R.id.results_avg_value);
@@ -145,7 +151,7 @@ public class DisplayResultsActivity extends AppCompatActivity {
         public void onClick(View v) {
             ((HostSession) GameSessionHolder.getInstance().getSession()).resetCurrentCard();
             resultsListAdapter.clear();
-            for(int i = 0;i<nrOfPlayers;i++){
+            for (int i = 0; i < nrOfPlayers; i++) {
                 resultsListAdapter.add("0");
             }
             resetStatistics();
@@ -178,8 +184,15 @@ public class DisplayResultsActivity extends AppCompatActivity {
 
     private class NextCardListener implements View.OnClickListener {
         public void onClick(View v) {
-            // Finish destroys this activity and returns to the previous one
-            finish();
+            GameSession session = GameSessionHolder.getInstance().getSession();
+            Card currentCard = session.getGameBoard().getCard(session.getCurrentCardId());
+            if (!cardRating.getText().toString().equals("") && !cardRating.getText().toString().equals("0")) {
+                int ratingForCard = Integer.parseInt(cardRating.getText().toString());
+                currentCard.setRating(ratingForCard);
+                finish();
+            } else {
+                Toast.makeText(DisplayResultsActivity.this, "Can not submit an empty rating", Toast.LENGTH_LONG).show();
+            }
         }
     }
 

@@ -82,6 +82,7 @@ public class HostSession extends GameSession {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        currentCardId = cardId;
                         Log.i(logTag,"Successfully set current card to: " + cardId);
                     }
                 }, new Response.ErrorListener() {

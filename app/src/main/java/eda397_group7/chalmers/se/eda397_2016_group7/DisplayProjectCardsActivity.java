@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -15,13 +16,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import game.BroadCastTypes;
+import game.GameSession;
 import game.GameSessionHolder;
 import game.HostSession;
+import trelloInteraction.Card;
 
 public class DisplayProjectCardsActivity extends AppCompatActivity {
 
@@ -33,6 +37,8 @@ public class DisplayProjectCardsActivity extends AppCompatActivity {
     private int i=0;
     final String[] selectedCard = {""};
     private BroadcastReceiver receiver;
+    private List<Integer> selectedCardPositions = new ArrayList<>();
+    private ListView myList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +47,7 @@ public class DisplayProjectCardsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ListView myList = (ListView) findViewById(R.id.listViewOfProjectsCards);
-
+        myList = (ListView) findViewById(R.id.listViewOfProjectsCards);
         myList.setOnItemClickListener(new MyOnItemClickListener(myList));
         myAdapter = new ArrayAdapter<>(
                 this,
@@ -98,6 +103,19 @@ public class DisplayProjectCardsActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        GameSession session = GameSessionHolder.getInstance().getSession();
+        for(String cardId : cards){
+            Card card = session.getGameBoard().getCard(cardId);
+            if(card.getRating() != 0){
+                TextView item = (TextView) myList.getChildAt(cards.indexOf(cardId));
+                item.setPaintFlags(item.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            }
+        }
+    }
+
     private class MyBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -105,10 +123,19 @@ public class DisplayProjectCardsActivity extends AppCompatActivity {
 
             if(action.equals(BroadCastTypes.CURRENT_BOARD_UPDATED)){
                 ((ProgressBar) findViewById(R.id.projectcards_progressbar)).setVisibility(ProgressBar.INVISIBLE);
-                cards = GameSessionHolder.getInstance().getSession().getGameBoard().getCardId();
-                names = GameSessionHolder.getInstance().getSession().getGameBoard().getCardNames();
+                GameSession session = GameSessionHolder.getInstance().getSession();
+                cards = session.getGameBoard().getCardId();
+                names = session.getGameBoard().getCardNames();
                 myAdapter.clear();
                 myAdapter.addAll(names);
+
+                for(String cardId : cards){
+                    Card card = session.getGameBoard().getCard(cardId);
+                    if(card.getRating() != 0){
+                        TextView item = (TextView) myList.getChildAt(cards.indexOf(cardId));
+                        item.setPaintFlags(item.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    }
+                }
             }
         }
     }

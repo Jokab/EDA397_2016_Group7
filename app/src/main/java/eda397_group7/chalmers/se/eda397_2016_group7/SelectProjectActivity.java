@@ -77,8 +77,6 @@ public class SelectProjectActivity extends AppCompatActivity {
         Button devButton = (Button) findViewById(R.id.startGameButton);
         createStartButtonListener(selectedProject, players, devButton);
 
-        Button debugButton = (Button) findViewById(R.id.select_project_debugbutton);
-        createDebugButtonListener(selectedProject, debugButton);
     }
 
     private void createSelectedProjectListener(final String[] selectedProject, final ListView myList) {
@@ -120,15 +118,6 @@ public class SelectProjectActivity extends AppCompatActivity {
                     GameSessionHolder.getInstance().getSession().getGameBoard().updateCards();
                     startActivity(new Intent(SelectProjectActivity.this, DisplayProjectCardsActivity.class));
                 }
-            }
-        });
-    }
-
-    private void createDebugButtonListener(final String[] selectedProject, Button debugButton) {
-        debugButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectedProject[0] = DEBUG_PROJECT_ID;
             }
         });
     }
