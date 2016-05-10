@@ -24,7 +24,7 @@
     <string name="results_std_label">Std</string>
     <string name="results_median_label">Median</string>
     <string name="results_average_label">Average</string>
-    <string name="results_modal_label">Modal</string>
+    <string name="results_mode_label">Mode</string>
     <string name="results_std_value">Stdval</string>
     <string name="results_median_value">Medianval</string>
     <string name="results_avg_value">Avgval</string>
@@ -35,4 +35,5 @@
     <string name="planning_poker">Planning-Poker</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
+    <string name="results_update_ratings_button">Update ratings</string>
 </resources>

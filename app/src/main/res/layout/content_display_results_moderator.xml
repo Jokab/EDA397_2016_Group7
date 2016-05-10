@@ -120,7 +120,7 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/results_modal_label"
+                        android:text="@string/results_mode_label"
                         android:id="@+id/textView18"
                         android:layout_weight="1" />
 
@@ -128,7 +128,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/results_modal_value"
-                        android:id="@+id/results_modal_value" />
+                        android:id="@+id/results_mode_value" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -159,6 +159,12 @@
                 android:layout_height="wrap_content"
                 android:text="@string/results_mod_nextcard"
                 android:id="@+id/submit_rating" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/results_update_ratings_button"
+                android:id="@+id/results_update_ratings_button" />
 
             <Button
                 android:layout_width="match_parent"

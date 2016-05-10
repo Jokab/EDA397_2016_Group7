@@ -23,13 +23,10 @@ import game.GameSessionHolder;
 import game.HostSession;
 
 import game.BroadCastTypes;
-import game.GameSession;
-import game.GameSessionHolder;
-import game.HostSession;
 
 public class DisplayResultsActivity extends AppCompatActivity {
 
-    public static final List<String> resultListData = new ArrayList<>(Arrays.asList(new String[]{"5", "3", "7", "1", "3", "6", "5", "5", "5","5","5","5","5","5","5","5","5"}));
+    public static final List<String> resultListData = new ArrayList<>();
     private ArrayAdapter<String> resultsListAdapter;
     private Receiver receiver;
     private int nrOfPlayers;
@@ -60,6 +57,8 @@ public class DisplayResultsActivity extends AppCompatActivity {
         nextCard.setOnClickListener(new NextCardListener());
         Button rateAgain = (Button) findViewById(R.id.rateCardAgain);
         rateAgain.setOnClickListener(new RateAgainListener());
+        Button updateRatings = (Button) findViewById(R.id.results_update_ratings_button);
+        updateRatings.setOnClickListener(new UpdateRatingsButton());
 
         updateStatistics();
 
@@ -75,67 +74,75 @@ public class DisplayResultsActivity extends AppCompatActivity {
         }
 
         TextView avgValText = (TextView) findViewById(R.id.results_avg_value);
-
-        double avgVal = computeAverage(resultsAsInt);
-        avgValText.setText(formatStatistic(avgVal));
+        double avg = computeAverage(resultsAsInt);
+        avgValText.setText(formatStatistic(avg));
 
         TextView stdValText = (TextView) findViewById(R.id.results_std_value);
-        double stdVal = computeStd(resultsAsInt, avgVal);
-        stdValText.setText(formatStatistic(stdVal));
+        double std = computeStd(resultsAsInt, avg);
+        stdValText.setText(formatStatistic(std));
 
         TextView medianValText = (TextView) findViewById(R.id.results_median_value);
         double median = computeMedian(resultsAsInt);
         medianValText.setText(formatStatistic(median));
 
-        TextView modalValText = (TextView) findViewById(R.id.results_modal_value);
+        TextView modeValText = (TextView) findViewById(R.id.results_mode_value);
+        double mode = computerMode(resultsAsInt);
+        modeValText.setText(formatStatistic(mode));
     }
 
-    private double computeAverage(int[] resultsAsInt) {
+    private double computeAverage(int[] numbers) {
         int sum = 0;
-        for (int aResultsAsInt : resultsAsInt) {
+        for (int aResultsAsInt : numbers) {
             sum += aResultsAsInt;
         }
-        return (double) (sum / resultsAsInt.length);
+        return (double) (sum / numbers.length);
     }
 
-    private String formatStatistic(double stdVal) {
+    private String formatStatistic(double std) {
         DecimalFormat statisticsNumberFormat = new DecimalFormat("#.00");
-        return String.valueOf(statisticsNumberFormat.format(stdVal));
+        return String.valueOf(statisticsNumberFormat.format(std));
     }
 
-    private double computeMedian(int[] resultsAsInt) {
+    private double computeMedian(int[] numbers) {
         // Shamelessly stolen from
         // http://stackoverflow.com/questions/11955728/how-to-calculate-the-median-of-an-array
-        Arrays.sort(resultsAsInt);
+        Arrays.sort(numbers);
         double median;
-        if (resultsAsInt.length % 2 == 0)
-            median = ((double)resultsAsInt[resultsAsInt.length/2] + (double)resultsAsInt[resultsAsInt.length/2 - 1])/2;
+        if (numbers.length % 2 == 0)
+            median = ((double)numbers[numbers.length/2] + (double)numbers[numbers.length/2 - 1])/2;
         else
-            median = (double) resultsAsInt[resultsAsInt.length/2];
+            median = (double) numbers[numbers.length/2];
         return median;
     }
 
-    private double computeStd(int[] resultsAsInt, double avgVal) {
+    private double computeStd(int[] numbers, double average) {
         double stdSum = 0;
-        for (int aResultsAsInt : resultsAsInt) {
-            stdSum += Math.pow((aResultsAsInt - avgVal), 2);
+        for (int number : numbers) {
+            stdSum += Math.pow((number - average), 2);
         }
-        return Math.sqrt((1/(double)resultsAsInt.length) * stdSum);
+        return Math.sqrt((1/(double)numbers.length) * stdSum);
+    }
+
+    private double computerMode(int[] numbers) {
+        int maxValue = 0;
+        int maxCount = 0;
+
+        for (int i = 0; i < numbers.length; ++i) {
+            int count = 0;
+            for (int j = 0; j < numbers.length; ++j) {
+                if (numbers[j] == numbers[i]) ++count;
+            }
+            if (count > maxCount) {
+                maxCount = count;
+                maxValue = numbers[i];
+            }
+        }
+
+        return maxValue;
     }
 
     private class RateAgainListener implements View.OnClickListener {
         public void onClick(View v) {
-            ((HostSession) GameSessionHolder.getInstance().getSession()).getCurrentRatings();
-
-            //assignRandomDataToList();
-            //updateStatistics();
-
-//            List<Integer> currentRatings = ((HostSession) GameSessionHolder.getInstance().getSession()).getCurrentRatings();
-//            if(!currentRatings.isEmpty()) {
-//                resultsListAdapter.clear();
-//                resultsListAdapter.addAll(currentRatings);
-//
-//            }
             ((HostSession) GameSessionHolder.getInstance().getSession()).resetCurrentCard();
             resultsListAdapter.clear();
             for(int i = 0;i<nrOfPlayers;i++){
@@ -147,15 +154,15 @@ public class DisplayResultsActivity extends AppCompatActivity {
 
     private void resetStatistics() {
         TextView avgValText = (TextView) findViewById(R.id.results_avg_value);
-        avgValText.setText(".00");
+        avgValText.setText("0.00");
 
         TextView stdValText = (TextView) findViewById(R.id.results_std_value);
-        stdValText.setText(".00");
+        stdValText.setText("0.00");
 
         TextView medianValText = (TextView) findViewById(R.id.results_median_value);
-        medianValText.setText(".00");
+        medianValText.setText("0.00");
 
-        TextView modalValText = (TextView) findViewById(R.id.results_modal_value);
+        TextView modalValText = (TextView) findViewById(R.id.results_mode_value);
     }
 
     @Override
@@ -173,6 +180,12 @@ public class DisplayResultsActivity extends AppCompatActivity {
         public void onClick(View v) {
             // Finish destroys this activity and returns to the previous one
             finish();
+        }
+    }
+
+    private class UpdateRatingsButton implements View.OnClickListener {
+        public void onClick(View v) {
+            ((HostSession) GameSessionHolder.getInstance().getSession()).getCurrentRatings();
         }
     }
 
