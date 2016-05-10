@@ -2,6 +2,7 @@ package game;
 
 import android.app.Application;
 import android.content.Intent;
+import android.util.Log;
 
 public class BroadCastManager extends Application {
 
