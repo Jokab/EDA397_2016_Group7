@@ -34,7 +34,7 @@ public class DisplayProjectCardsActivity extends AppCompatActivity {
     private List<String> names = new ArrayList<>();
     private ArrayAdapter<String> myAdapter;
     private final Handler myHandler = new Handler();
-    private int i=0;
+    private int i = 0;
     final String[] selectedCard = {""};
     private BroadcastReceiver receiver;
     private List<Integer> selectedCardPositions = new ArrayList<>();
@@ -107,10 +107,13 @@ public class DisplayProjectCardsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         GameSession session = GameSessionHolder.getInstance().getSession();
-        for(String cardId : cards){
+        for (String cardId : cards) {
             Card card = session.getGameBoard().getCard(cardId);
-            if(card.getRating() != 0){
+            if (card.getRating() != 0) {
                 TextView item = (TextView) myList.getChildAt(cards.indexOf(cardId));
+                if (!item.getText().toString().contains("[" + card.getRating() + "]")) {
+                    item.setText("[" + card.getRating() + "] " + item.getText());
+                }
                 item.setPaintFlags(item.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             }
         }
@@ -121,7 +124,7 @@ public class DisplayProjectCardsActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
 
-            if(action.equals(BroadCastTypes.CURRENT_BOARD_UPDATED)){
+            if (action.equals(BroadCastTypes.CURRENT_BOARD_UPDATED)) {
                 ((ProgressBar) findViewById(R.id.projectcards_progressbar)).setVisibility(ProgressBar.INVISIBLE);
                 GameSession session = GameSessionHolder.getInstance().getSession();
                 cards = session.getGameBoard().getCardId();
@@ -129,9 +132,9 @@ public class DisplayProjectCardsActivity extends AppCompatActivity {
                 myAdapter.clear();
                 myAdapter.addAll(names);
 
-                for(String cardId : cards){
+                for (String cardId : cards) {
                     Card card = session.getGameBoard().getCard(cardId);
-                    if(card.getRating() != 0){
+                    if (card.getRating() != 0) {
                         TextView item = (TextView) myList.getChildAt(cards.indexOf(cardId));
                         item.setPaintFlags(item.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                     }
