@@ -2,6 +2,7 @@ package trelloInteraction;
 
 import static trelloInteraction.TrelloUrl.GET_BOARD_CARDS;
 import static trelloInteraction.TrelloUrl.GET_BOARDS;
+import static trelloInteraction.TrelloUrl.UPDATE_CARD;
 import static trelloInteraction.TrelloUrl.createURL;
 
 /**
@@ -50,5 +51,15 @@ public enum TrelloManagerS {
      */
     public String getBoardsForCurrentUser(Argument ... args) {
         return(enhanceURL(createURL(GET_BOARDS).asString()));
+    }
+
+    /**
+     * Returns a URL for requesting all cards belonging to boardID, with optional args
+     * @param cardId
+     * @param args
+     * @return Request URL
+     */
+    public String updateCard(String cardId, Argument ... args) {
+        return(enhanceURL(createURL(UPDATE_CARD).asString(cardId)));
     }
 }

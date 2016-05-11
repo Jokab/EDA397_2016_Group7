@@ -11,12 +11,25 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +38,9 @@ import game.BroadCastTypes;
 import game.GameSession;
 import game.GameSessionHolder;
 import game.HostSession;
+import trelloInteraction.Board;
 import trelloInteraction.Card;
+import trelloInteraction.TrelloManagerS;
 
 public class DisplayProjectCardsActivity extends AppCompatActivity {
 
@@ -59,6 +74,54 @@ public class DisplayProjectCardsActivity extends AppCompatActivity {
         receiver = new MyBroadcastReceiver();
         IntentFilter f1 = new IntentFilter(BroadCastTypes.CURRENT_BOARD_UPDATED);
         registerReceiver(receiver, f1);
+
+        Button endGameButton = (Button) findViewById(R.id.end_game_button);
+        assert endGameButton != null;
+        endGameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GameSession session = GameSessionHolder.getInstance().getSession();
+                Board gameBoard = session.getGameBoard();
+                List<String> cardIds = gameBoard.getCardId();
+                RequestQueue queue = Volley.newRequestQueue(DisplayProjectCardsActivity.this);
+                for (final String cardId : cardIds) {
+                    final Card card = gameBoard.getCard(cardId);
+                    if (card != null) {
+                        int cardRating = card.getRating();
+                        if (cardRating != 0) {
+                            JSONObject jsonObject = new JSONObject();
+                            try {
+                                jsonObject.put("name", "("+card.getRating()+") "+card.getName());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            JsonObjectRequest updateCard = new JsonObjectRequest(
+                                    Request.Method.PUT,
+                                    TrelloManagerS.INSTANCE.updateCard(cardId),
+                                    jsonObject,
+                                    new Response.Listener<JSONObject>() {
+                                        @Override
+                                        public void onResponse(JSONObject response) {
+                                            Log.i("Update Success", "Successfully updated Card: "+cardId);
+                                        }
+                                    }, new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        Log.i("Update Error", "Failed to update Card: "+cardId);
+                                        Log.i("Update Error", error.getMessage());
+                                    }
+                            }
+                            );
+                            queue.add(updateCard);
+                        }
+                    }
+                }
+                queue.start();
+                (GameSessionHolder.getInstance().getSession()).resetGame();
+                Toast.makeText(DisplayProjectCardsActivity.this, "Your trello board has been updated. Thank you for playing", Toast.LENGTH_LONG).show();
+                finish();
+            }
+        });
     }
 
     @Override

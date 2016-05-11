@@ -19,6 +19,9 @@ public class TrelloUrl {
     //Cards Base URLs
     public static final String GET_CARD = "/cards/{cardId}?";
 
+    //Update a card - can only be used in a PUT-Request
+    public static final String UPDATE_CARD = "/cards/{cardId}?";
+
     //Get Boards for current user
     public static final String GET_BOARDS = "/members/me/boards?";
 
