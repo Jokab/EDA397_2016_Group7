@@ -71,6 +71,8 @@ public class DisplayResultsActivity extends AppCompatActivity {
         receiver = new Receiver();
         IntentFilter filter = new IntentFilter(BroadCastTypes.CARD_RATINGS_RECEIVED);
         registerReceiver(receiver, filter);
+        IntentFilter filter2 = new IntentFilter(BroadCastTypes.CARD_RATINGS_NOT_RECEIVED);
+        registerReceiver(receiver, filter2);
     }
 
     private void updateStatistics() {
@@ -207,15 +209,20 @@ public class DisplayResultsActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            Log.i(DisplayResultsActivity.class.getSimpleName(), "Received ratings");
 
             if(action.equals(BroadCastTypes.CARD_RATINGS_RECEIVED)) {
+                Log.i(DisplayResultsActivity.class.getSimpleName(), "Received ratings");
                 List<String> currentRatings = ((HostSession) GameSessionHolder.getInstance().getSession()).getCurrentRatingsList();
                 if(!currentRatings.isEmpty()) {
                     resultsListAdapter.clear();
                     resultsListAdapter.addAll(currentRatings);
                     updateStatistics();
                 }
+            }
+
+            if(action.equals(BroadCastTypes.CARD_RATINGS_NOT_RECEIVED)) {
+                Log.i(DisplayResultsActivity.class.getSimpleName(), "Could not retrieve ratings");
+                Toast.makeText(DisplayResultsActivity.this, "Not every member has voted yet", Toast.LENGTH_LONG).show();
             }
         }
     }

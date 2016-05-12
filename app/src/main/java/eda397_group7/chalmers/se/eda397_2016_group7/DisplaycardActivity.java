@@ -25,6 +25,7 @@ public class DisplaycardActivity extends AppCompatActivity {
     private TextView ratingResultView;
     private TextView currentCard;
     private BroadcastReceiver receiver;
+    private final String logTag = "DisplayCardActivityLog:";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +112,7 @@ public class DisplaycardActivity extends AppCompatActivity {
                 String id = GameSessionHolder.getInstance().getSession().getCurrentCardId();
                 String name = GameSessionHolder.getInstance().getSession().getGameBoard().getCard(id).getName();
                 currentCard.setText(name);
-                Log.i("receiver","received current card:");
+                Log.i(logTag,"received current card:");
             } else if (action.equals(BroadCastTypes.COULD_NOT_RATE)) {
                 Toast.makeText(getApplicationContext(), "Could not rate card", Toast.LENGTH_SHORT).show();
             }

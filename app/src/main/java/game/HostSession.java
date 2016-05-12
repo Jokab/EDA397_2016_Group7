@@ -137,6 +137,7 @@ public class HostSession extends GameSession {
                 }, new Response.ErrorListener() {
             public void onErrorResponse(VolleyError error) {
                 Log.i(logTag,"Failed to get current card ratings.");
+                BroadCastManager.get().broadCast(BroadCastTypes.CARD_RATINGS_NOT_RECEIVED);
             }
 
         });
