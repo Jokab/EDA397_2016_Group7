@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/chooserole_dev"
-        android:id="@+id/DeveloperButton"
+        android:id="@+id/JoinSessionButton"
         android:layout_below="@+id/textView4"
         android:layout_alignParentStart="true"
         android:layout_marginTop="118dp"
@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/chooserole_mod"
-        android:id="@+id/ModeratorButton"
+        android:id="@+id/NewSessionButton"
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true" />

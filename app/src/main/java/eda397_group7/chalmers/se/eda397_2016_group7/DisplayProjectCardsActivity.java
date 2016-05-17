@@ -44,11 +44,9 @@ import trelloInteraction.TrelloManagerS;
 
 public class DisplayProjectCardsActivity extends AppCompatActivity {
 
-    public static final String[] TEST_CARDS_LIST_DATA = new String[]{"Card A", "Card B", "Card C"};
     private List<String> cards = new ArrayList<>();
     private List<String> names = new ArrayList<>();
     private ArrayAdapter<String> myAdapter;
-    private final Handler myHandler = new Handler();
     private int i = 0;
     final String[] selectedCard = {""};
     private BroadcastReceiver receiver;
