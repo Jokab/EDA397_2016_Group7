@@ -75,6 +75,10 @@ public abstract class GameSession {
         queue.add(startRequest);
     }
 
+    public int getMemberId() {
+        return memberId;
+    }
+
     public void resetGame() {
         JsonObjectRequest startRequest = new JsonObjectRequest(Request.Method.GET,
                 createURL(RESET_GAME).asString(), null,

@@ -1,13 +1,10 @@
 package eda397_group7.chalmers.se.eda397_2016_group7;
 
 import android.app.ProgressDialog;
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +17,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import game.BroadCastTypes;
+import game.GameSession;
 import game.GameSessionHolder;
 import game.PlayerSession;
 
@@ -48,10 +46,15 @@ public class ChooseRoleActivity extends AppCompatActivity {
 
         devButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                GameSessionHolder.getInstance().setSession(new PlayerSession());
-                registerProgress.show();
-                myHandler.postDelayed(registerProgressRunnable, 3000);
-                ((PlayerSession) GameSessionHolder.getInstance().getSession()).registerToSession();
+                int memberId = GameSessionHolder.getInstance().getSession().getMemberId();
+                if (memberId != 0) {
+                    startActivity(new Intent(ChooseRoleActivity.this, DisplaycardActivity.class));
+                } else {
+                    GameSessionHolder.getInstance().setSession(new PlayerSession());
+                    registerProgress.show();
+                    myHandler.postDelayed(registerProgressRunnable, 3000);
+                    ((PlayerSession) GameSessionHolder.getInstance().getSession()).registerToSession();
+                }
             }
         });
         registerProgressRunnable = new Runnable() {
