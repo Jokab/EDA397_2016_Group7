@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
@@ -32,6 +33,8 @@ public class ChooseRoleActivity extends AppCompatActivity {
 
     private AlertDialog.Builder alertBuilder;
     private DialogInterface.OnClickListener dialogClickListener;
+
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +89,17 @@ public class ChooseRoleActivity extends AppCompatActivity {
 
         dialogClickListener = new DialogOnClickListener();
         alertBuilder = new AlertDialog.Builder(this);
+
+        Button logoutButton = (Button) findViewById(R.id.logoutButton);
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                sharedPreferences = getSharedPreferences(
+                        "authorizeprefs", Context.MODE_PRIVATE);
+                sharedPreferences.edit().putString("authtoken", "empty").apply();
+                Intent i = new Intent(ChooseRoleActivity.this, MainActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
     @Override
