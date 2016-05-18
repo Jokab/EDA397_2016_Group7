@@ -20,4 +20,7 @@ public class  BroadCastTypes {
     public static final String CARD_RATINGS_RECEIVED = "cardRatingsReceived";
     public static final String CARD_RATINGS_NOT_RECEIVED = "cardRatingsNotReceived";
 
+    public static final String MEMBER_FOUND = "memberFound";
+    public static final String MEMBER_NOT_FOUND = "memberNotFound";
+
 }

@@ -23,6 +23,7 @@ public class ServerURL {
     public static final String GET_CURRENT_CARD_RATINGS = "/getRatingsForCurrentCard"; //:memberId
     public static final String GET_ALL_RATINGS = "/getAllRatings"; // :memberid
     public static final String CHECK_FOR_SESSION = "/checkForSession";
+    public static final String CHECK_MEMBER_ID = "/checkMember"; // :memberid
 
     //Parameters
     public static final String ARG_BOARD_ID = "trelloBoardId";

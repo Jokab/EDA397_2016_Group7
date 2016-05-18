@@ -28,6 +28,11 @@ public class ChooseRoleActivity extends AppCompatActivity {
     private ProgressDialog registerProgress;
     private Runnable registerProgressRunnable;
     private Handler myHandler;
+
+    private ProgressDialog checkMemberProgress;
+    private Runnable  checkMemberProgressRunnable;
+    private Handler checkMemberHandler;
+
     private BroadcastReceiver receiver;
 
     private AlertDialog.Builder alertBuilder;
@@ -35,9 +40,11 @@ public class ChooseRoleActivity extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences;
 
+    private Button joinSession;
+
     @Override
     public void onBackPressed() {
-        moveTaskToBack(true);
+        this.finishAffinity();
     }
 
     @Override
@@ -49,12 +56,15 @@ public class ChooseRoleActivity extends AppCompatActivity {
 
         myHandler = new Handler();
 
-        Button joinSession = (Button) findViewById(R.id.JoinSessionButton);
+        joinSession = (Button) findViewById(R.id.JoinSessionButton);
         joinSession.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 int memberId = GameSessionHolder.getInstance().getSession().getMemberId();
                 if (memberId != 0) {
-                    startActivity(new Intent(ChooseRoleActivity.this, DisplaycardActivity.class));
+                    checkMemberHandler = new Handler();
+                    checkMemberProgress.show();
+                    checkMemberHandler.postDelayed(checkMemberProgressRunnable, 3000);
+                    ((PlayerSession) GameSessionHolder.getInstance().getSession()).checkMember(memberId);
                 } else {
                     GameSessionHolder.getInstance().setSession(new PlayerSession());
                     registerProgress.show();
@@ -83,6 +93,18 @@ public class ChooseRoleActivity extends AppCompatActivity {
             }
         };
 
+        checkMemberProgress = new ProgressDialog(this);
+        checkMemberProgress.setTitle("Checking for Session");
+        checkMemberProgress.setMessage("Please wait while we are trying to find a running session...");
+        checkMemberProgressRunnable = new Runnable() {
+            @Override
+            public void run() {
+                checkMemberProgress.dismiss();
+                Toast.makeText(getApplicationContext(),
+                        "Finished checking for session", Toast.LENGTH_SHORT).show();
+            }
+        };
+
         Button modButton = (Button) findViewById(R.id.NewSessionButton);
         modButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -97,6 +119,10 @@ public class ChooseRoleActivity extends AppCompatActivity {
         registerReceiver(receiver, f2);
         IntentFilter f3 = new IntentFilter(BroadCastTypes.ONGOING_SESSION);
         registerReceiver(receiver, f3);
+        IntentFilter f4 = new IntentFilter(BroadCastTypes.MEMBER_FOUND);
+        registerReceiver(receiver, f4);
+        IntentFilter f5 = new IntentFilter(BroadCastTypes.MEMBER_NOT_FOUND);
+        registerReceiver(receiver, f5);
 
         dialogClickListener = new DialogOnClickListener();
         alertBuilder = new AlertDialog.Builder(this);
@@ -166,6 +192,19 @@ public class ChooseRoleActivity extends AppCompatActivity {
                 if (action.equals(BroadCastTypes.REGISTER_SUCCESSFUL)) {
                     startActivity(new Intent(ChooseRoleActivity.this, DisplaycardActivity.class));
                 }
+            }
+
+            if (action.equals(BroadCastTypes.MEMBER_NOT_FOUND)) {
+                registerProgress.dismiss();
+                myHandler.removeCallbacks(registerProgressRunnable);
+                GameSessionHolder.getInstance().getSession().setMemberId(0);
+                joinSession.performClick();
+            }
+
+            if (action.equals(BroadCastTypes.MEMBER_FOUND)) {
+                registerProgress.dismiss();
+                myHandler.removeCallbacks(registerProgressRunnable);
+                startActivity(new Intent(ChooseRoleActivity.this, DisplaycardActivity.class));
             }
 
             if (action.equals((BroadCastTypes.NO_SESSION)) || action.equals((BroadCastTypes.ONGOING_SESSION ))) {

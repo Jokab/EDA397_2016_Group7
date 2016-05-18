@@ -66,6 +66,10 @@ public abstract class GameSession {
         return memberId;
     }
 
+    public void setMemberId(int memberId) {
+        this.memberId = memberId;
+    }
+
     public void resetGame() {
         JsonObjectRequest startRequest = new JsonObjectRequest(Request.Method.GET,
                 createURL(RESET_GAME).asString(), null,

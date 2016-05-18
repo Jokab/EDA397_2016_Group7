@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         //Need to set this up ONCE.
         RequestQueue queue = VolleyManager.getInstance(this.getApplicationContext()).getRequestQueue();
         TrelloManagerS.INSTANCE.init(TrelloAuthenticationConstants.APP_KEY, authtoken);
-        GameSessionHolder.getInstance().setSession(new HostSession() {
+            GameSessionHolder.getInstance().setSession(new HostSession() {
         });
 
         if (trelloLoginButton != null) {
