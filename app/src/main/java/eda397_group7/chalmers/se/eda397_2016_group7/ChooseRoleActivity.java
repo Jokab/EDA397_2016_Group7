@@ -19,7 +19,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import game.BroadCastTypes;
-import game.GameSession;
 import game.GameSessionHolder;
 import game.PlayerSession;
 
@@ -35,6 +34,11 @@ public class ChooseRoleActivity extends AppCompatActivity {
     private DialogInterface.OnClickListener dialogClickListener;
 
     private SharedPreferences sharedPreferences;
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +126,9 @@ public class ChooseRoleActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_refresh) {
             (GameSessionHolder.getInstance().getSession()).resetGame();
+        }
+        if (item.getItemId() == R.id.action_settings) {
+            startActivity(new Intent(ChooseRoleActivity.this, Tutorial.class));
         }
         return super.onOptionsItemSelected(item);
     }

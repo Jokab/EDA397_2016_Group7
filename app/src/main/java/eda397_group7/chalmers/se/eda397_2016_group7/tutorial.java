@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 
-public class tutorial extends AppCompatActivity {
+public class Tutorial extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +23,7 @@ public class tutorial extends AppCompatActivity {
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(tutorial.this, ChooseRoleActivity.class);
+                Intent intent = new Intent(Tutorial.this, ChooseRoleActivity.class);
                 startActivity(intent);
             }
         });
