@@ -32,4 +32,5 @@ dependencies {
     compile 'me.neavo:volley:2014.12.09'
     compile 'org.immutables:gson:2.1.16'
     compile 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }
