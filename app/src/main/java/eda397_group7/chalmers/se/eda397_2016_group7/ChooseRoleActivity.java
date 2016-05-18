@@ -67,7 +67,8 @@ public class ChooseRoleActivity extends AppCompatActivity {
         Button modButton = (Button) findViewById(R.id.ModeratorButton);
         modButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivity(new Intent(ChooseRoleActivity.this, SelectProjectActivity.class));
+                //startActivity(new Intent(ChooseRoleActivity.this, SelectProjectActivity.class));
+                startActivity(new Intent(ChooseRoleActivity.this, ViewPagerTestActivity.class));
             }
         });
 
