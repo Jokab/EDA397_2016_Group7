@@ -19,8 +19,8 @@
     <string name="results_mod_nextcard">Submit rating and pick new card</string>
     <string name="proj_cards_title">Project cards:</string>
     <string name="chooserole_title">Choose role:</string>
-    <string name="chooserole_dev">Developer</string>
-    <string name="chooserole_mod">Moderator</string>
+    <string name="chooserole_dev">Join session</string>
+    <string name="chooserole_mod">Create new session</string>
     <string name="results_std_label">Std</string>
     <string name="results_median_label">Median</string>
     <string name="results_average_label">Average</string>
