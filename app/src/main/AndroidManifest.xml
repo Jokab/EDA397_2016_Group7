@@ -54,7 +54,6 @@
             android:label="@string/title_activity_display_project_cards"
             android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".SelectProjectActivity"/>
-        <activity android:name=".ViewPagerTestActivity"/>
         <activity
             android:name=".Tutorial"
             android:label="@string/title_activity_tutorial"
