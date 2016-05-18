@@ -99,7 +99,17 @@ public class ChooseRoleActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.action_refresh) {
             (GameSessionHolder.getInstance().getSession()).resetGame();
         }
+        if (item.getItemId()== R.id.action_settings){
+            startActivity(new Intent(ChooseRoleActivity.this, tutorial.class));
+        }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        this.finishAffinity();
+        super.onBackPressed();
     }
 
     private class MyBroadcastReceiver extends BroadcastReceiver {

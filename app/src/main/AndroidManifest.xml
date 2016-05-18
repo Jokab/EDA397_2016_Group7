@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="eda397_group7.chalmers.se.eda397_2016_group7">
+
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name="game.BroadCastManager"
         android:allowBackup="true"
@@ -15,13 +17,18 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE"/>
-                <data android:scheme="ase" android:host="oauthresponse"/>
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="oauthresponse"
+                    android:scheme="ase" />
             </intent-filter>
         </activity>
         <activity
@@ -36,17 +43,21 @@
             android:name=".DisplayResultsActivity"
             android:label="@string/title_activity_display_results"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".SelectProjectActivity"
             android:label="@string/title_activity_select_project"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".DisplayProjectCardsActivity"
             android:label="@string/title_activity_display_project_cards"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".SelectProjectActivity"/>
+            android:parentActivityName=".SelectProjectActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".tutorial"
+            android:label="@string/title_activity_tutorial"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
