@@ -22,6 +22,7 @@ public class ServerURL {
     public static final String RESET_CARD = "/resetCard";// memberId
     public static final String GET_CURRENT_CARD_RATINGS = "/getRatingsForCurrentCard"; //:memberId
     public static final String GET_ALL_RATINGS = "/getAllRatings"; // :memberid
+    public static final String CHECK_FOR_SESSION = "/checkForSession";
 
     //Parameters
     public static final String ARG_BOARD_ID = "trelloBoardId";
@@ -29,6 +30,7 @@ public class ServerURL {
     public static final String ARG_MEMBER_ID = "memberId";
     public static final String ARG_CARD_ID = "cardId";
     public static final String ARG_RATING_ID = "rating";
+    public static final String ARG_SESSION_STATUS = "sessionExists";
 
     public static final String ARG_RATING_VOTINGS = "votings";
     public static final String ARG_RATING_VOTE_BY_MEMBER = "voting";

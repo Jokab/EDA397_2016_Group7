@@ -119,10 +119,8 @@ public class MainActivity extends AppCompatActivity {
                 returnFromAuth = true;
                 TrelloManagerS.INSTANCE.setAuthToken(code);
             }
-            Intent i = new Intent(MainActivity.this, ChooseRoleActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            Intent i = new Intent(MainActivity.this, Tutorial.class);
             startActivity(i);
-            finish();
         }
         return returnFromAuth;
     }

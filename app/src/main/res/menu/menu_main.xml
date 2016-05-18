@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="eda397_group7.chalmers.se.eda397_2016_group7.MainActivity" >
     <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
+        android:title="@string/action_tutorial"
         android:orderInCategory="100"
         app:showAsAction="never" />
     <item android:id="@+id/action_refresh"

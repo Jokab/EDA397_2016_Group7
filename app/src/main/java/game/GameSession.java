@@ -1,9 +1,5 @@
 package game;
 
-import android.app.Application;
-import android.content.Context;
-import android.os.Parcelable;
-import android.os.Parcel;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -18,19 +14,10 @@ import org.json.JSONObject;
 import trelloInteraction.Board;
 import trelloInteraction.VolleyManager;
 
-import trelloInteraction.Argument;
-import trelloInteraction.Board;
-import trelloInteraction.Card;
-import trelloInteraction.TrelloManagerS;
-import trelloInteraction.VolleyManager;
-
-import static game.ServerURL.ARG_CARD_ID;
-import static game.ServerURL.ARG_MEMBER_ID;
+import static game.ServerURL.ARG_SESSION_STATUS;
+import static game.ServerURL.CHECK_FOR_SESSION;
 import static game.ServerURL.GET_CURRENT_CARD;
 import static game.ServerURL.RESET_GAME;
-import static game.ServerURL.SET_CURRENT_CARD;
-import static game.ServerURL.createURL;
-import static game.ServerURL.GET_CURRENT_CARD;
 import static game.ServerURL.createURL;
 
 /**
@@ -75,6 +62,10 @@ public abstract class GameSession {
         queue.add(startRequest);
     }
 
+    public int getMemberId() {
+        return memberId;
+    }
+
     public void resetGame() {
         JsonObjectRequest startRequest = new JsonObjectRequest(Request.Method.GET,
                 createURL(RESET_GAME).asString(), null,
@@ -91,6 +82,33 @@ public abstract class GameSession {
         });
         queue.add(startRequest);
     }
+
+    public void checkForSession() {
+        JsonObjectRequest startRequest = new JsonObjectRequest(Request.Method.GET,
+                createURL(CHECK_FOR_SESSION).asString(), null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            if(response.getBoolean(ARG_SESSION_STATUS)) {
+                                BroadCastManager.get().broadCast(BroadCastTypes.ONGOING_SESSION);
+                                Log.i(logTag, "Session active");
+                            } else {
+                                BroadCastManager.get().broadCast(BroadCastTypes.NO_SESSION);
+                                Log.i(logTag, "No session active");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            public void onErrorResponse(VolleyError error) {
+            }
+
+        });
+        queue.add(startRequest);
+    }
+
 
     /**
      * @return id of current card.

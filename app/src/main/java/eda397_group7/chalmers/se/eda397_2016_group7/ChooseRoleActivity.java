@@ -1,7 +1,6 @@
 package eda397_group7.chalmers.se.eda397_2016_group7;
 
 import android.app.ProgressDialog;
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,9 +9,9 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +30,16 @@ public class ChooseRoleActivity extends AppCompatActivity {
     private Handler myHandler;
     private BroadcastReceiver receiver;
 
+    private AlertDialog.Builder alertBuilder;
+    private DialogInterface.OnClickListener dialogClickListener;
+
+    private SharedPreferences sharedPreferences;
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,33 +47,43 @@ public class ChooseRoleActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Button devButton = (Button) findViewById(R.id.DeveloperButton);
+        myHandler = new Handler();
+
+        Button joinSession = (Button) findViewById(R.id.JoinSessionButton);
+        joinSession.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                int memberId = GameSessionHolder.getInstance().getSession().getMemberId();
+                if (memberId != 0) {
+                    startActivity(new Intent(ChooseRoleActivity.this, DisplaycardActivity.class));
+                } else {
+                    GameSessionHolder.getInstance().setSession(new PlayerSession());
+                    registerProgress.show();
+                    myHandler.postDelayed(registerProgressRunnable, 3000);
+                    ((PlayerSession) GameSessionHolder.getInstance().getSession()).registerToSession();
+                }
+            }
+        });
+
+        Button newSession = (Button) findViewById(R.id.NewSessionButton);
+        newSession.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                GameSessionHolder.getInstance().getSession().checkForSession();
+            }
+        });
 
         registerProgress = new ProgressDialog(this);
         registerProgress.setTitle("Registering");
         registerProgress.setMessage("Please wait while trying to register...");
-        myHandler = new Handler();
-        Intent i = getIntent();
-
-        devButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                GameSessionHolder.getInstance().setSession(new PlayerSession());
-                registerProgress.show();
-                myHandler.postDelayed(registerProgressRunnable, 3000);
-                ((PlayerSession) GameSessionHolder.getInstance().getSession()).registerToSession();
-            }
-        });
         registerProgressRunnable = new Runnable() {
             @Override
             public void run() {
                 registerProgress.dismiss();
                 Toast.makeText(getApplicationContext(),
                         "Could not register", Toast.LENGTH_SHORT).show();
-
             }
         };
 
-        Button modButton = (Button) findViewById(R.id.ModeratorButton);
+        Button modButton = (Button) findViewById(R.id.NewSessionButton);
         modButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //startActivity(new Intent(ChooseRoleActivity.this, SelectProjectActivity.class));
@@ -72,11 +91,27 @@ public class ChooseRoleActivity extends AppCompatActivity {
             }
         });
 
-
         receiver = new MyBroadcastReceiver();
         IntentFilter f1 = new IntentFilter(BroadCastTypes.REGISTER_SUCCESSFUL);
         registerReceiver(receiver, f1);
+        IntentFilter f2 = new IntentFilter(BroadCastTypes.NO_SESSION);
+        registerReceiver(receiver, f2);
+        IntentFilter f3 = new IntentFilter(BroadCastTypes.ONGOING_SESSION);
+        registerReceiver(receiver, f3);
 
+        dialogClickListener = new DialogOnClickListener();
+        alertBuilder = new AlertDialog.Builder(this);
+
+        Button logoutButton = (Button) findViewById(R.id.logoutButton);
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                sharedPreferences = getSharedPreferences(
+                        "authorizeprefs", Context.MODE_PRIVATE);
+                sharedPreferences.edit().putString("authtoken", "empty").apply();
+                Intent i = new Intent(ChooseRoleActivity.this, MainActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
     @Override
@@ -100,7 +135,26 @@ public class ChooseRoleActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.action_refresh) {
             (GameSessionHolder.getInstance().getSession()).resetGame();
         }
+        if (item.getItemId() == R.id.action_settings) {
+            startActivity(new Intent(ChooseRoleActivity.this, Tutorial.class));
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    private class DialogOnClickListener implements DialogInterface.OnClickListener {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which){
+                case DialogInterface.BUTTON_POSITIVE:
+                    (GameSessionHolder.getInstance().getSession()).resetGame();
+                    startActivity(new Intent(ChooseRoleActivity.this, SelectProjectActivity.class));
+                    break;
+
+                case DialogInterface.BUTTON_NEGATIVE:
+                    //No button clicked
+                    break;
+            }
+        }
     }
 
     private class MyBroadcastReceiver extends BroadcastReceiver {
@@ -113,6 +167,11 @@ public class ChooseRoleActivity extends AppCompatActivity {
                 if (action.equals(BroadCastTypes.REGISTER_SUCCESSFUL)) {
                     startActivity(new Intent(ChooseRoleActivity.this, DisplaycardActivity.class));
                 }
+            }
+
+            if (action.equals((BroadCastTypes.NO_SESSION)) || action.equals((BroadCastTypes.ONGOING_SESSION ))) {
+                alertBuilder.setMessage("Do you want to create a new session?").setPositiveButton("Yes", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener).show();
             }
         }
     }

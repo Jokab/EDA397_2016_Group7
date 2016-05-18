@@ -13,6 +13,10 @@ public class  BroadCastTypes {
 
     public static final String REGISTER_SUCCESSFUL = "registerSuccessful";
 
+
+    public static final String ONGOING_SESSION = "onGoingSession";
+    public static final String NO_SESSION = "noSession";
+
     public static final String CARD_RATINGS_RECEIVED = "cardRatingsReceived";
     public static final String CARD_RATINGS_NOT_RECEIVED = "cardRatingsNotReceived";
 
