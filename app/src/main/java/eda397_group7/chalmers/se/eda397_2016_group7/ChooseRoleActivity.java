@@ -105,13 +105,6 @@ public class ChooseRoleActivity extends AppCompatActivity {
             }
         };
 
-        Button modButton = (Button) findViewById(R.id.NewSessionButton);
-        modButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                startActivity(new Intent(ChooseRoleActivity.this, SelectProjectActivity.class));
-            }
-        });
-
         receiver = new MyBroadcastReceiver();
         IntentFilter f1 = new IntentFilter(BroadCastTypes.REGISTER_SUCCESSFUL);
         registerReceiver(receiver, f1);
